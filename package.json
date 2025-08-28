@@ -1,0 +1,66 @@
+{
+  "name": "inzozi",
+  "version": "1.0.0",
+  "description": "\"Inzozi platform\"",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Solvit-Africa-Training-Center/InzoziSchool_Backend.git"
+  },
+  "author": "Ganza & Serge",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Solvit-Africa-Training-Center/InzoziSchool_Backend/issues"
+  },
+  "homepage": "https://github.com/Solvit-Africa-Training-Center/InzoziSchool_Backend#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:migrate:undo:all": "sequelize-cli db:migrate:undo:all",
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:seed:undo": "sequelize-cli db:seed:undo:all",
+    "migration:generate": "sequelize-cli migration:generate --name",
+    "seed:generate": "sequelize-cli seed:generate --name",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
+    "lint-fix": "eslint . --ext .ts --fix",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.3.0",
+    "@types/sequelize": "^4.28.20",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.3.0",
+    "lint-staged": "^16.1.5",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0"
+  },
+  "dependencies": {
+    "babel-register": "^6.26.0",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "redis": "^5.8.2",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}
