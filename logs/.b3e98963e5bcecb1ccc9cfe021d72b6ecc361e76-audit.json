@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\user\\OneDrive\\Documents\\GitHub\\InzoziSchool_Backend\\logs\\.b3e98963e5bcecb1ccc9cfe021d72b6ecc361e76-audit.json",
+    "files": [
+        {
+            "date": 1756557589908,
+            "name": "C:\\Users\\user\\OneDrive\\Documents\\GitHub\\InzoziSchool_Backend\\logs\\error-2025-08-30.log",
+            "hash": "8f31f7d28e7199df37dab28a81848310a2ca1c67ed73cf92722e7f2bcbf6824c"
+        },
+        {
+            "date": 1756618572470,
+            "name": "C:\\Users\\user\\OneDrive\\Documents\\GitHub\\InzoziSchool_Backend\\logs\\error-2025-08-31.log",
+            "hash": "7dc4aba92e1f2add56333821e444760bccc07c871cb88dbf445445650d9140a1"
+        }
+    ],
+    "hashType": "sha256"
+}

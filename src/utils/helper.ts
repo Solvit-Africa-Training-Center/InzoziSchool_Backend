@@ -42,7 +42,7 @@ export const generateToken = async ({
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const verifyToken = async (token: string): Promise<any> => {
+export const verifyToken = async (token: string, Request: unknown, res: any, Response: unknown, next: any, NextFunction: any): Promise<any> => {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const decoded = jwt.verify(token, secretKey) as any;

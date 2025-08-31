@@ -1,0 +1,255 @@
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:37:09"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:40:24"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:40:46"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:44:53"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:49:40"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:52:11"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 13:58:22"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 14:01:46"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 14:01:54"}
+{"level":"info","message":"Redis configuration: localhost:6379, DB:0","timestamp":"2025-08-31 14:52:55"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB:0","timestamp":"2025-08-31 15:00:34"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB:0","timestamp":"2025-08-31 15:01:59"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB:0","timestamp":"2025-08-31 15:04:51"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:13:14"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:13:16"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:13:16"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:13:16"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:22:59"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:22:59"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:23:00"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:23:00"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:31:30"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:31:30"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:31:31"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:31:31"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:31:35"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:31:40"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:31:43"}
+{"level":"error","message":"Redis connection error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com","stack":"Error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)","timestamp":"2025-08-31 15:31:44"}
+{"level":"error","message":"Redis connection error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com","stack":"Error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)","timestamp":"2025-08-31 15:31:44"}
+{"level":"error","message":"Redis connection error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com","stack":"Error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)","timestamp":"2025-08-31 15:31:44"}
+{"level":"error","message":"Redis connection error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com","stack":"Error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)","timestamp":"2025-08-31 15:31:44"}
+{"level":"error","message":"Redis connection error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com","stack":"Error: getaddrinfo ENOTFOUND redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)","timestamp":"2025-08-31 15:31:45"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:31:46"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:31:47"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:31:47"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:32:22"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:32:23"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:32:23"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:32:23"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:32:45"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:32:45"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:32:45"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:32:45"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:32:50"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:32:50"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:32:51"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:32:51"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:39:24"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:39:24"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:39:24"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:39:24"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:41:32"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:41:33"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:41:33"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:41:33"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:41:49"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:41:50"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:41:50"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:41:50"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:46:58"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:46:59"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:46:59"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:46:59"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:52:28"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:52:28"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:52:29"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:52:29"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:52:35"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:52:35"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:52:36"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:52:36"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:52:40"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:52:41"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:52:41"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:52:41"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:52:46"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:52:47"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:52:47"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:52:47"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:57:15"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:57:16"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:57:16"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:57:16"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 15:58:36"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 15:58:36"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 15:58:36"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 15:58:36"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:07:27"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:07:27"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:07:28"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:07:28"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:09:34"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:09:34"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:09:35"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:09:35"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:09:53"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:09:53"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:09:54"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:09:54"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:10:00"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:10:00"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:10:01"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:10:01"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:10:09"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:10:09"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:10:10"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:10:10"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:10:16"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:10:16"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:10:16"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:10:16"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:10:37"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:10:37"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:10:38"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:10:38"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:10:44"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:10:45"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:10:45"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:10:45"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB:0","timestamp":"2025-08-31 16:11:51"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:12:22"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:12:22"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:12:23"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:12:23"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:21:19"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:21:20"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:21:20"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:21:20"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:21:28"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:21:28"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:21:29"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:21:29"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:21:33"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:21:34"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:21:34"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:21:34"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:21:41"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:21:41"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:21:41"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:21:41"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:21:46"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:21:47"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:21:47"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:21:47"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:21:56"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:21:56"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:21:56"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:21:56"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:22:03"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:22:04"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:22:10"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:22:10"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:22:14"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:22:14"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:22:14"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:22:14"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:22:20"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:22:20"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:22:21"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:22:21"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:22:31"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:22:32"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:22:35"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:22:35"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:43:04"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:43:05"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:43:05"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:43:05"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:50:20"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:50:20"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:50:21"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:50:21"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:52:39"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:52:39"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 16:53:01"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 16:53:02"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 16:53:02"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 16:53:02"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:02:12"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:02:13"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:02:13"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:02:13"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:02:57"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:02:58"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:02:58"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:02:58"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:09:22"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:09:23"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:09:23"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:09:23"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:09:35"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:09:35"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:09:36"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:09:36"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:11:00"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:11:01"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:11:01"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:11:01"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:11:20"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:11:21"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:11:21"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:11:21"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:13:09"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:13:09"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:13:09"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:13:09"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:13:24"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:13:24"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:13:25"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:13:25"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:13:35"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:13:35"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:13:36"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:13:36"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:13"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:16"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:14:16"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:14:16"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:14:16"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:29"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:14:30"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:14:30"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:14:30"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:45"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:49"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:14:50"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:14:50"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:14:50"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:54"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:14:54"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:14:55"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:14:55"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:14:58"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:14:58"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:03"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:15:03"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:15:03"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:15:03"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:11"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:15"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:15:15"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:21"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:15:22"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:15:22"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:15:22"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:34"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:15:34"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:15:34"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:15:34"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:46"}
+{"level":"info","message":"Redis configuration: redis-18243.c265.us-east-1-2.ec2.redns.redis-cloud.com:18243, DB: NaN","timestamp":"2025-08-31 17:15:50"}
+{"level":"info","message":"Redis client connecting...","timestamp":"2025-08-31 17:15:51"}
+{"level":"info","message":"Redis client ready","timestamp":"2025-08-31 17:15:51"}
+{"level":"info","message":"Redis connected successfully","timestamp":"2025-08-31 17:15:51"}

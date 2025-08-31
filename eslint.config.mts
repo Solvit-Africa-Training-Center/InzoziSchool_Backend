@@ -11,7 +11,7 @@ export default tseslint.config(
 
   // General rules for all JS/TS files
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,tsx}'],
     languageOptions: {
       globals: globals.node, // Node.js backend
       parserOptions: {
