@@ -13,7 +13,7 @@ export default tseslint.config(
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
-      globals: globals.node, // Node.js backend
+      globals: { ...globals.node, ...globals.jest }, // Node.js backend
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',

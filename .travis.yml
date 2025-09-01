@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - "18"
+
+services:
+  - postgresql
+  - redis
+
+env:
+  global:
+    - DB_HOST=localhost
+    - DB_PORT=5432
+    - DB_NAME=inzozi_db
+    - DB_USER=postgres
+    - DB_PASS=
+    - REDIS_HOST=localhost
+    - REDIS_PORT=6379
+
+before_script:
+  - psql -c "CREATE DATABASE inzozi_db;" -U postgres
+  - npm install
+
+script:
+  - npm test
+
+after_success:
+  - npm run coverage
+  - npx coveralls < coverage/lcov.info
+
+branches:
+  only:
+    - main
