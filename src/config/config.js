@@ -1,25 +1,28 @@
-
+// src/config/config.js
 const dotenv = require('dotenv');
 dotenv.config();
+const nodeEnv = process.env.NODE_ENV || 'development';
+
+
 const getPrefix = () => {
-  let env = process.env.NODE_ENV;
-  if (!env) {
-    return (env = 'DEV');
+  if (nodeEnv === 'test') return 'TEST';
+  if (nodeEnv === 'production') return 'PROD';
+  return 'DEV'; // default
+};
+
+const env = getPrefix();
+
+module.exports = {
+  username: process.env[`${env}_USERNAME`] || 'postgres',
+  password: process.env[`${env}_PASSWORD`] || '',
+  database: process.env[`${env}_DATABASE`] || (env === 'TEST' ? 'inzozi_test' : 'inzozi_db'),
+  host: process.env[`${env}_HOST`] || 'localhost',
+  port: process.env[`${env}_PORT`] ? parseInt(process.env[`${env}_PORT`], 10) : 5432,
+  dialect: 'postgres',
+  logging: false,
+  define: {
+    underscored: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
   }
-  return env;
 };
-
-const databaseConfig = () => {
-  const env = getPrefix();
-  
-  return {
-    username: process.env[`${env}_USERNAME`] || '',
-    database: process.env[`${env}_DATABASE`] || '',
-    password: process.env[`${env}_PASSWORD`] || '',
-    host: process.env[`${env}_HOST`] || '',
-    port: process.env[`${env}_PORT`] || 5432,
-    dialect: 'postgres',
-  };
-};
-
-module.exports = databaseConfig;

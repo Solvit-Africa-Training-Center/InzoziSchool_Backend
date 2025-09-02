@@ -5,3 +5,5 @@ package-lock.json
 coverage/
 logs/
 *.log
+.vscode/
+.DS_Store

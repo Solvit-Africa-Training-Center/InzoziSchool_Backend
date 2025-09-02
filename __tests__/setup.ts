@@ -1,5 +1,6 @@
 import supertest,{Request,Response} from 'supertest'
 import {it,describe,expect} from '@jest/globals'
+import sequelizeInstance  from '../src/database';
  import {app} from '../src/server'
 
  const request =supertest(app)
@@ -11,3 +12,14 @@ describe ('Get /',()=>{
     })
 
 })
+
+
+
+beforeAll(async () => {
+  await sequelizeInstance.authenticate();
+  await sequelizeInstance.sync({ force: true });
+});
+
+afterAll(async () => {
+  await sequelizeInstance.close();
+});
