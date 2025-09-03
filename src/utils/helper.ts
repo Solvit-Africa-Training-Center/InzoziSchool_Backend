@@ -5,6 +5,15 @@ import { redis } from './redis';
 import { v4 as uuidv4 } from 'uuid';
 import { errorLogger } from './logger';
 
+interface JWTPayload {
+  id: string;
+  email: string;
+  role: string;
+  jti: string;
+  iat?: number;
+  exp?: number;
+}
+
 config();
 
 export const generateSlug = (title: string): string =>
@@ -41,11 +50,9 @@ export const generateToken = async ({
   return token;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const verifyToken = async (token: string): Promise<any> => {
+export const verifyToken = async (token: string): Promise<JWTPayload> => {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const decoded = jwt.verify(token, secretKey) as any;
+    const decoded = jwt.verify(token, secretKey) as JWTPayload;
     const storedData = await redis.get(`jwt:${decoded.jti}`);
     if (!storedData) {
       throw new Error('Token not found in Redis - may have been revoked');

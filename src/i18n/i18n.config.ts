@@ -4,7 +4,7 @@ import path from 'path';
 
 // Load translation files
 const loadLocales = () => {
-  const locales: Record<string, any> = {};
+  const locales: Record<string, { translation: any }> = {};
   const localeDirs = ['en', 'fr', 'rw']; 
 
   localeDirs.forEach(lang => {

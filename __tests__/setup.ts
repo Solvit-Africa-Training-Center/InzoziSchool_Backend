@@ -1,25 +1,23 @@
-import supertest,{Request,Response} from 'supertest'
-import {it,describe,expect} from '@jest/globals'
-import sequelizeInstance  from '../src/database';
- import {app} from '../src/server'
+import supertest, { Request, Response } from 'supertest';
+import { it, describe, expect } from '@jest/globals';
+import { Database } from '../src/database';
+import { app } from '../src/server';
 
- const request =supertest(app)
-describe ('Get /',()=>{
-    it('should return Hello world',async()=>{
-        const res=await request.get('/');
-        expect(res.status).toBe(200);
-        expect(res.text).toBe('Hello World')
-    })
+const request = supertest(app);
 
-})
-
-
+describe('Get /', () => {
+  it('should return Hello world', async () => {
+    const res = await request.get('/');
+    expect(res.status).toBe(200);
+    expect(res.text).toBe('Hello World');
+  });
+});
 
 beforeAll(async () => {
-  await sequelizeInstance.authenticate();
-  await sequelizeInstance.sync({ force: true });
+  await Database.database.authenticate();
+  await Database.database.sync({ force: true });
 });
 
 afterAll(async () => {
-  await sequelizeInstance.close();
+  await Database.database.close();
 });

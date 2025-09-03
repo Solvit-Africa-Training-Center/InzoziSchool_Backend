@@ -3,7 +3,7 @@ import { ObjectSchema } from 'joi';
 import { ResponseService } from '../utils/response';
 
 interface ValidateOption<T> {
-  type: 'body' | 'headers' | 'params';
+  type: 'body' | 'headers' | 'params' | 'query';
   schema: ObjectSchema<T>;
 }
 
