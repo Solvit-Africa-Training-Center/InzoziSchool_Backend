@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import authRoutes from './authRoutes';
+import userManagementRoutes from './userManagementRoutes';
 
 const routers = Router();
 
@@ -30,6 +31,9 @@ const routers = Router();
 // Authentication routes
 routers.use('/auth', authRoutes);
 
-const allRoutes: Router[] = [authRoutes];
+// User Management routes (SYSTEM_ADMIN manages INSPECTORs, SCHOOL_MANAGER manages ADMISSION_MANAGERs)
+routers.use('/user-management', userManagementRoutes);
+
+const allRoutes: Router[] = [authRoutes, userManagementRoutes];
 
 export { routers };

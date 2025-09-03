@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Inzozi School API',
+      title: 'InzoziSchool Backend API',
       version: '1.0.0',
-      description: 'Backend API for Inzozi School platform. Supports school search, registration, and multi-language support.',
+      description: 'Comprehensive backend API for InzoziSchool platform. Features include: Authentication, User Management with Role Hierarchy (SYSTEM_ADMIN manages INSPECTORs, SCHOOL_MANAGER manages ADMISSION_MANAGERs), School Management, and Multi-language Support.',
     },
     servers: [
       {
@@ -327,6 +327,322 @@ const options = {
             translation: {
               type: 'object',
               description: 'Translation data for the specified language'
+            }
+          }
+        },
+        Role: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+              format: 'uuid',
+              description: 'Unique identifier for the role'
+            },
+            name: {
+              type: 'string',
+              enum: ['SYSTEM_ADMIN', 'SCHOOL_MANAGER', 'INSPECTOR', 'ADMISSION_MANAGER'],
+              description: 'Role name in InzoziSchool hierarchy'
+            }
+          }
+        },
+        School: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+              format: 'uuid',
+              description: 'Unique identifier for the school'
+            },
+            school_name: {
+              type: 'string',
+              description: 'Name of the school'
+            },
+            school_code: {
+              type: 'string',
+              description: 'Unique school code'
+            }
+          }
+        },
+        CreateUserRequest: {
+          type: 'object',
+          required: ['firstName', 'lastName', 'gender', 'province', 'district', 'sector', 'cell', 'village', 'phone', 'email', 'roleId'],
+          properties: {
+            firstName: {
+              type: 'string',
+              minLength: 2,
+              maxLength: 50,
+              example: 'John',
+              description: 'User\'s first name'
+            },
+            lastName: {
+              type: 'string',
+              minLength: 2,
+              maxLength: 50,
+              example: 'Inspector',
+              description: 'User\'s last name'
+            },
+            gender: {
+              type: 'string',
+              enum: ['Male', 'Female', 'Other'],
+              example: 'Male'
+            },
+            province: {
+              type: 'string',
+              example: 'Kigali'
+            },
+            district: {
+              type: 'string',
+              example: 'Gasabo'
+            },
+            sector: {
+              type: 'string',
+              example: 'Remera'
+            },
+            cell: {
+              type: 'string',
+              example: 'Nyabisindu'
+            },
+            village: {
+              type: 'string',
+              example: 'Kabeza'
+            },
+            phone: {
+              type: 'string',
+              pattern: '^(\\+?25)?(07[0-9]{8})$',
+              example: '0788123456'
+            },
+            email: {
+              type: 'string',
+              format: 'email',
+              example: 'inspector@inzozi.rw'
+            },
+            roleId: {
+              type: 'string',
+              format: 'uuid',
+              description: 'Role ID (must be manageable by current user)'
+            },
+            schoolId: {
+              type: 'string',
+              format: 'uuid',
+              description: 'School ID (required for ADMISSION_MANAGER)',
+              nullable: true
+            },
+            password: {
+              type: 'string',
+              minLength: 8,
+              description: 'Optional password (system generates if not provided)',
+              example: 'SecurePass123!'
+            }
+          }
+        },
+        UpdateUserRequest: {
+          type: 'object',
+          properties: {
+            firstName: {
+              type: 'string',
+              minLength: 2,
+              maxLength: 50
+            },
+            lastName: {
+              type: 'string',
+              minLength: 2,
+              maxLength: 50
+            },
+            gender: {
+              type: 'string',
+              enum: ['Male', 'Female', 'Other']
+            },
+            province: { type: 'string' },
+            district: { type: 'string' },
+            sector: { type: 'string' },
+            cell: { type: 'string' },
+            village: { type: 'string' },
+            phone: {
+              type: 'string',
+              pattern: '^(\\+?25)?(07[0-9]{8})$'
+            },
+            email: {
+              type: 'string',
+              format: 'email'
+            },
+            roleId: {
+              type: 'string',
+              format: 'uuid'
+            },
+            schoolId: {
+              type: 'string',
+              format: 'uuid',
+              nullable: true
+            }
+          }
+        },
+        UserManagementResponse: {
+          type: 'object',
+          properties: {
+            success: {
+              type: 'boolean',
+              example: true
+            },
+            message: {
+              type: 'string',
+              example: 'User created successfully'
+            },
+            data: {
+              type: 'object',
+              properties: {
+                user: {
+                  allOf: [
+                    { $ref: '#/components/schemas/User' },
+                    {
+                      type: 'object',
+                      properties: {
+                        role: { $ref: '#/components/schemas/Role' },
+                        school: { $ref: '#/components/schemas/School' }
+                      }
+                    }
+                  ]
+                },
+                temporaryPassword: {
+                  type: 'string',
+                  description: 'Temporary password (only for new users)'
+                }
+              }
+            }
+          }
+        },
+        UsersListResponse: {
+          type: 'object',
+          properties: {
+            success: {
+              type: 'boolean',
+              example: true
+            },
+            message: {
+              type: 'string',
+              example: 'Users retrieved successfully'
+            },
+            data: {
+              type: 'object',
+              properties: {
+                users: {
+                  type: 'array',
+                  items: {
+                    allOf: [
+                      { $ref: '#/components/schemas/User' },
+                      {
+                        type: 'object',
+                        properties: {
+                          role: { $ref: '#/components/schemas/Role' },
+                          school: { $ref: '#/components/schemas/School' }
+                        }
+                      }
+                    ]
+                  }
+                },
+                pagination: {
+                  type: 'object',
+                  properties: {
+                    currentPage: { type: 'integer', example: 1 },
+                    totalPages: { type: 'integer', example: 5 },
+                    totalUsers: { type: 'integer', example: 45 },
+                    usersPerPage: { type: 'integer', example: 10 },
+                    hasNextPage: { type: 'boolean', example: true },
+                    hasPrevPage: { type: 'boolean', example: false }
+                  }
+                }
+              }
+            }
+          }
+        },
+        UserStatsResponse: {
+          type: 'object',
+          properties: {
+            success: {
+              type: 'boolean',
+              example: true
+            },
+            message: {
+              type: 'string',
+              example: 'User statistics retrieved successfully'
+            },
+            data: {
+              type: 'object',
+              properties: {
+                totalUsers: {
+                  type: 'integer',
+                  example: 25,
+                  description: 'Total number of users you can manage'
+                },
+                roleBreakdown: {
+                  type: 'object',
+                  properties: {
+                    INSPECTOR: {
+                      type: 'integer',
+                      example: 15,
+                      description: 'Number of INSPECTOR users (SYSTEM_ADMIN only)'
+                    },
+                    ADMISSION_MANAGER: {
+                      type: 'integer',
+                      example: 10,
+                      description: 'Number of ADMISSION_MANAGER users (SCHOOL_MANAGER only)'
+                    }
+                  }
+                },
+                managedRoles: {
+                  type: 'array',
+                  items: {
+                    type: 'string'
+                  },
+                  example: ['INSPECTOR'],
+                  description: 'Roles that the current user can manage'
+                }
+              }
+            }
+          }
+        },
+        AvailableRolesResponse: {
+          type: 'object',
+          properties: {
+            success: {
+              type: 'boolean',
+              example: true
+            },
+            message: {
+              type: 'string',
+              example: 'Available roles retrieved successfully'
+            },
+            data: {
+              type: 'object',
+              properties: {
+                availableRoles: {
+                  type: 'array',
+                  items: {
+                    type: 'string'
+                  },
+                  example: ['INSPECTOR'],
+                  description: 'Roles that current user can assign to new users'
+                },
+                currentUserRole: {
+                  type: 'string',
+                  example: 'SYSTEM_ADMIN',
+                  description: 'Current user\'s role'
+                },
+                canManage: {
+                  type: 'object',
+                  properties: {
+                    INSPECTOR: {
+                      type: 'boolean',
+                      example: true,
+                      description: 'Can manage INSPECTOR users'
+                    },
+                    ADMISSION_MANAGER: {
+                      type: 'boolean',
+                      example: false,
+                      description: 'Can manage ADMISSION_MANAGER users'
+                    }
+                  }
+                }
+              }
             }
           }
         }
