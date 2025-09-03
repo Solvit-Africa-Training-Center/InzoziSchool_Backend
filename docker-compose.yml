@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: ${DEV_USERNAME}
       POSTGRES_PASSWORD: ${DEV_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data   # ✅ Named volume (correct)
     healthcheck:
@@ -40,7 +40,7 @@ services:
       DEV_HOST: postgres
       REDIS_HOST: redis
     ports:
-      - "6000:6000"
+      - "9000:9000"
     volumes:
       - .:/app
       - /app/node_modules
