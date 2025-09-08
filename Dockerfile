@@ -39,7 +39,7 @@ RUN chown -R backend:nodejs /app
 USER backend
 
 # Expose port
-EXPOSE 6000
+EXPOSE 5000
 
 # Start dev server (assumes `npm run dev` uses ts-node or ts-node-dev)
 CMD ["sh", "scripts/start.sh"]

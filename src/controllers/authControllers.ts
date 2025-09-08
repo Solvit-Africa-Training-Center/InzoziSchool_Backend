@@ -1,97 +1,59 @@
-import { Request, Response } from 'express';
-import { AuthService } from '../services/AuthService';
-import { ResponseService } from '../utils/response';
+import { Request, Response } from "express";
+import { AuthService,PasswordResetService} from "../services/AuthService";
+import { ResponseService } from "../utils/response";
+import { IRequestUser } from "../middlewares/authMiddleware";
+import { LoginUserRequest } from "../types/userInterface";
+import { sendEmail } from "../utils/mailer";
+
+const authService = new AuthService();
 
 export class AuthController {
-    // REGISTER
-    static async register(req: Request, res: Response) {
-        try {
-            return await AuthService.registerWithEmail(req.body, res);
-        } catch (error) {
-            const { message, stack } = error as Error;
-            return ResponseService({
-                res,
-                status: 500,
-                success: false,
-                message: 'Internal server error',
-                data: { message, stack },
-            });
-        }
+  // Login
+  static async login(req: LoginUserRequest, res: Response) {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return ResponseService({ data: null, status: 400, success: false, message: "Email and password are required", res });
     }
 
-    // LOGIN
-    static async login(req: Request, res: Response) {
-        try {
-            return await AuthService.login(req.body, res);
-        } catch (error) {
-            const { message, stack } = error as Error;
-            return ResponseService({
-                res,
-                status: 500,
-                success: false,
-                message: 'Login failed',
-                data: { message, stack },
-            });
-        }
+    const response = await authService.login({ email, password });
+    return ResponseService
+    ({ ...response, res });
+  }
+
+  // Logout
+  static async logout(req: IRequestUser, res: Response) {
+    const token = req.headers.authorization?.split(" ")[1];
+    const response = await authService.logout(token);
+    return ResponseService({ ...response, res });
+  }
+}
+
+
+
+export class PasswordResetController {
+   static async forgotPassword(req: Request, res: Response) {
+    const { email } = req.body;
+    if (!email) return ResponseService({ data: null, success: false, status: 400, message: "Email required", res });
+
+    try {
+      await PasswordResetService.requestReset(email);
+      return ResponseService({ data: null, success: true, status: 200, message: "Reset code sent", res });
+    } catch (e: any) {
+      return ResponseService({ data: null, success: false, status: 400, message: e.message, res });
+    }
+  }
+  static async resetPassword(req: Request, res: Response) {
+    const { email, code, newPassword } = req.body;
+    if (!email || !code || !newPassword) {
+      return ResponseService({ data: null, success: false, status: 400, message: "Email, code and password required", res });
     }
 
-    // LOGOUT
-    static async logout(req: Request, res: Response) {
-        try {
-            const authHeader = req.headers.authorization;
-            if (!authHeader || !authHeader.startsWith('Bearer ')) {
-                return ResponseService({
-                    res,
-                    status: 400,
-                    success: false,
-                    message: 'Authorization token missing or malformed',
-                    data: null,
-                });
-            }
-
-            const token = authHeader.split(' ')[1];
-            return await AuthService.logout(token, res);
-        } catch (error) {
-            const { message, stack } = error as Error;
-            return ResponseService({
-                res,
-                status: 500,
-                success: false,
-                message: 'Logout failed',
-                data: { message, stack },
-            });
-        }
+    try {
+      await PasswordResetService.resetPassword(email, code, newPassword);
+      
+      return ResponseService({ data:null, success: true, status: 200, message: "Password updated Successful", res });
+    } catch (e: any) {
+      return ResponseService({ data: null, success: false, status: 400, message: e.message, res });
     }
-
-    // FORGOT PASSWORD
-    static async forgotPassword(req: Request, res: Response) {
-        try {
-            return await AuthService.forgotPassword(req.body, res);
-        } catch (error) {
-            const { message, stack } = error as Error;
-            return ResponseService({
-                res,
-                status: 500,
-                success: false,
-                message: 'Failed to send password reset link',
-                data: { message, stack },
-            });
-        }
-    }
-
-    // RESET PASSWORD
-    static async resetPassword(req: Request, res: Response) {
-        try {
-            return await AuthService.resetPassword(req.body, res);
-        } catch (error) {
-            const { message, stack } = error as Error;
-            return ResponseService({
-                res,
-                status: 500,
-                success: false,
-                message: 'Password reset failed',
-                data: { message, stack },
-            });
-        }
-    }
+  }
 }
