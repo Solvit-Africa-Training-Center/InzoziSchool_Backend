@@ -1,37 +1,14 @@
 import { Sequelize } from 'sequelize';
-import { UserModel, User } from './Users';
-import { RoleModel, Role } from './Roles';
-import { SchoolModel, School } from './Schools';
+import { Role,RoleModel } from './Roles';
+import { User, UserModel } from './User';
 
-// Define types for models
-type ModelsType = {
-  User: typeof User;
+interface Modals {
   Role: typeof Role;
-  School: typeof School;
-};
+  User:typeof User;
 
-// Define interface for models with associate method
-interface ModelWithAssociations {
-  associate?: (models: ModelsType) => void;
 }
-
-const sequelize = new Sequelize(process.env.DB_URL as string, {
-  dialect: 'postgres',
-  logging: false,
-});
-
-const models = {
-  User: UserModel(sequelize),
+export const AllModal = (sequelize: Sequelize): Modals => ({
   Role: RoleModel(sequelize),
-  School: SchoolModel(sequelize),
-};
-
-// Run associations
-Object.values(models).forEach((model: ModelWithAssociations) => {
-  if (model.associate) {
-    model.associate(models);
-  }
+  User:UserModel(sequelize),
+ 
 });
-
-export { sequelize };
-export default models;

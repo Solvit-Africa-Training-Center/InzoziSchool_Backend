@@ -1,96 +1,114 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/helper';
 import { ResponseService } from '../utils/response';
+import { verifyToken } from '../utils/helper';
+import { Role } from '../database/models/Roles';
+import rateLimit from 'express-rate-limit';
 
-// Import JWTPayload from helper to avoid duplicate definition
-interface JWTPayload {
-    id: string;
-    email: string;
-    role: string;
-    jti: string;
-    iat?: number;
-    exp?: number;
+// Rate limiting middleware
+export const rateLimiting = (customLimit?: number) =>
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: customLimit || 100, // Limit each IP to specified requests per windowMs
+    message: 'Too many requests from this IP, please try again after 15 minutes',
+  });
+
+interface JwtPayload {
+  id?: string;
+  email?: string;
+  role?: string;
+  permissions?: string[];
+  iat?: number;
+  exp?: number;
 }
 
-interface AuthRequest extends Request {
-    user?: JWTPayload;
+export interface IRequestUser extends Request {
+  user?: JwtPayload;
+  token?: string;
 }
 
-
-export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
-    try {
-        const authHeader = req.headers.authorization;
-
-        if (!authHeader) {
-            return ResponseService({
-                res,
-                status: 401,
-                success: false,
-                message: 'Authorization header missing',
-                data: null,
-            });
-        }
-
-        const token = authHeader.split(' ')[1]; // Bearer <token>
-        if (!token) {
-            return ResponseService({
-                res,
-                status: 401,
-                success: false,
-                message: 'Token missing',
-                data: null,
-            });
-        }
-
-        // Verify token and check blacklist
-        const decoded = await verifyToken(token);
-        req.user = decoded;
-
-        next();
-    } catch (error) {
-        return ResponseService({
-            res,
-            status: 401,
-            success: false,
-            message: 'Unauthorized',
-            data: null,
-        });
+// Authentication middleware
+export const authMiddleware = async (req: IRequestUser, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return ResponseService({
+        data: null,
+        status: 401,
+        success: false,
+        message: 'Authentication token is missing',
+        res,
+      });
     }
+
+    const user = (await verifyToken(token)) as JwtPayload;
+    if (!user) {
+      return ResponseService({
+        data: null,
+        status: 401,
+        success: false,
+        message: 'Invalid authentication token',
+        res,
+      });
+    }
+
+    req.user = user;
+    req.token = token;
+    next();
+  } catch (error) {
+    const { message, stack } = error as Error;
+    return ResponseService({
+      data: { message, stack },
+      status: 401,
+      success: false,
+      message: 'Invalid authentication token',
+      res,
+    });
+  }
 };
 
-// Middleware for role-based access control (optional, reusable)
-export const authorize = (...allowedRoles: string[]) => {
-    return (req: AuthRequest, res: Response, next: NextFunction) => {
-        try {
-            if (!req.user) {
-                return ResponseService({
-                    res,
-                    status: 403,
-                    success: false,
-                    message: 'Access denied',
-                    data: null,
-                });
-            }
+export const checkRole =
+  (roles: string[]) => async (req: IRequestUser, res: Response, next: NextFunction) => {
+    try {
+      if (!req.user || !req.user.role) {
+        return ResponseService({
+          data: null,
+          status: 403,
+          success: false,
+          message: 'Role information is missing',
+          res,
+        });
+      }
 
-            if (!allowedRoles.includes(req.user.role)) {
-                return ResponseService({
-                    res,
-                    status: 403,
-                    success: false,
-                    message: 'You do not have permission to access this resource',
-                    data: null,
-                });
-            }
+      const userRole = await Role.findByPk(req.user.role);
+      if (!userRole) {
+        return ResponseService({
+          data: null,
+          status: 403,
+          success: false,
+          message: 'Invalid role',
+          res,
+        });
+      }
 
-            next();
-        } catch (error) {
-            return ResponseService({
-                res,
-                status: 500,
-                success: false,
-                message: 'Server error',
-                data: null,
-            });
-        }
-    };
-};
+      if (!roles.includes(userRole.name)) {
+        return ResponseService({
+          data: null,
+          status: 403,
+          success: false,
+          message: 'You do not have the required role to perform this action',
+          res,
+        });
+      }
+
+      next();
+    } catch (error) {
+      const { message } = error as Error;
+      return ResponseService({
+        data: { message },
+        status: 500,
+        success: false,
+        message: 'Error checking role permissions',
+        res,
+      });
+    }
+  };

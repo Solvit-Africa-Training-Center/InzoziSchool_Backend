@@ -3,7 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger';
 import { getTranslation } from './routes/languages';
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 5000;
 
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
