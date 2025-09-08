@@ -7,7 +7,7 @@ import { IRequestUser } from "../middlewares/authMiddleware";
 
 export class UserController {
 
-  // Admin creates a SchoolManager
+  
   static async registerSchoolManager(req: Request<{}, {}, CreateSchoolManagerDto>, res: Response) {
     try {
       const user = await UserService.createSchoolManager(req.body);
@@ -51,11 +51,8 @@ export class UserController {
     }
   }
 
-  // List users by schoo
 
-
-
-  // Get users based on role
+  
   static async getUsers(req: IRequestUser, res: Response) {
     try {
       const users = await UserService.getAllUsers(req.user);
@@ -77,7 +74,7 @@ export class UserController {
     }
   }
 
-  // Delete user
+  
   static async deleteUser(req: IRequestUser, res: Response) {
     const { userId } = req.params;
     if(!userId){

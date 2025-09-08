@@ -51,7 +51,7 @@ export class UserService {
     if (requesterRole.name === "Admin") {
       
       return await User.findAll({
-    
+    include: [{ model: Role, as: "role", attributes: ["id", "name"] }],
       });
     }
 

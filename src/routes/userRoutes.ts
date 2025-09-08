@@ -37,28 +37,7 @@ router.post(
   UserController.registerSchoolManager
 );
 
-/**
- * @swagger
- * /api/users/admission-manager:
- *   post:
- *     summary: Create a new Admission Manager (SchoolManager only)
- *     tags: [User Management]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/CreateAdmissionManagerRequest'
- *     responses:
- *       201:
- *         description: Admission Manager created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/CreateAdmissionManagerResponse'
- */
+
 router.post(
   '/admission-manager',
   authMiddleware,
