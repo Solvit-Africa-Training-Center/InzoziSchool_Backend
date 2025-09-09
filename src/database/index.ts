@@ -46,5 +46,6 @@ Object.values(models).forEach((model) => {
 
 export type DatabaseType = typeof models & { database: Sequelize };
 export const Database = { ...models, database: sequelizeInstance };
+export const sequelize = sequelizeInstance;
 
 export default sequelizeInstance;

@@ -1,4 +1,4 @@
-// src/services/UserService.ts
+
 import { User } from "../database/models/User";
 import { Role } from "../database/models/Roles";
 import { hashPassword } from "../utils/helper";
@@ -21,20 +21,7 @@ export class UserService {
     return user;
   }
 
-  static async createAdmissionManager(data: CreateAdmissionManagerDto): Promise<User> {
-    const role = await Role.findOne({ where: { name: 'AdmissionManager' } });
-    if (!role) throw new Error('AdmissionManager role not found');
-
-    const hashedPassword = await hashPassword(data.password);
-
-    const user = await User.create({
-      ...data,
-      password: hashedPassword,
-      roleId: role.id,
-    });
-
-    return user;
-  }
+  
 
   
 

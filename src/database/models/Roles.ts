@@ -20,7 +20,7 @@ export class Role extends Model<RoleAttributes, RoleCreationAttributes> implemen
   public deletedAt?: Date | null;
 
   static associate(models: { User: typeof User }) {
-    Role.hasMany(models.User, { foreignKey: 'roleId', as: 'users' }); // alias "users" is unique
+    Role.hasMany(models.User, { foreignKey: 'roleId', as: 'users' }); 
   }
 }
 

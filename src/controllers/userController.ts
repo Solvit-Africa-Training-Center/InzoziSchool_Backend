@@ -29,27 +29,7 @@ export class UserController {
     }
   }
 
-  // SchoolManager creates AdmissionManager
-  static async registerAdmissionManager(req: Request<{}, {}, CreateAdmissionManagerDto>, res: Response) {
-    try {
-      const user = await UserService.createAdmissionManager(req.body);
-      return ResponseService({
-        data: { id: user.id, email: user.email, roleId: user.roleId, schoolId: user.schoolId },
-        success: true,
-        status: 201,
-        message: "AdmissionManager registered successfully",
-        res,
-      });
-    } catch (error: any) {
-      return ResponseService({
-        data: null,
-        success: false,
-        status: 400,
-        message: error.message,
-        res,
-      });
-    }
-  }
+ 
 
 
   

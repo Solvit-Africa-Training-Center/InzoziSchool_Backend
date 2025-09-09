@@ -1,5 +1,6 @@
 import { Sequelize,Model, DataTypes, Optional } from "sequelize";
 import { Role } from "./Roles";
+import { School } from "./School";
 
 
 export interface UserAttributes {
@@ -43,10 +44,19 @@ export class User
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date | null;
 
-   public static associate(models:{Role:typeof Role})
-   {
-   User.belongsTo(models.Role,{foreignKey:'roleId',as:'role'});
-   }
+   public static associate(models: { Role: typeof Role; School: typeof School }) {
+  User.belongsTo(models.Role, { foreignKey: 'roleId', as: 'role' });
+
+  // If this user belongs to a school
+  User.belongsTo(models.School, { foreignKey: 'schoolId', as: 'School' });
+
+  // If this user created a school request
+  User.hasOne(models.School, { foreignKey: 'userId', as: 'RequestedSchool' });
+
+  // If this user approved a school
+  User.hasMany(models.School, { foreignKey: 'approvedBy', as: 'ApprovedSchools' });
+}
+
 }
 
 export const UserModel =(sequelize:Sequelize):typeof User=>{

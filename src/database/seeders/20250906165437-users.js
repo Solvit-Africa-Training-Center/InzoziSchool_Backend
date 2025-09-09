@@ -35,7 +35,7 @@ module.exports = {
         lastName: 'Manager',
         gender: 'Female',
         district: 'Kigali',
-        email: 'philemonndayi@gmail.com',
+        email: 'clebertsabinganza@gmail.com',
         password: passwordSchoolManager,
         roleId: schoolManagerRoleId,
         createdAt: new Date(),
