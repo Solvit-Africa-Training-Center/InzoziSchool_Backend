@@ -38,13 +38,13 @@ router.post(
 );
 
 
-router.post(
-  '/admission-manager',
-  authMiddleware,
-  checkRole(['SchoolManager']),
-  ValidationMiddleware({ type: 'body', schema: createAdmissionManagerSchema }),
-  UserController.registerAdmissionManager
-);
+// router.post(
+//   '/admission-manager',
+//   authMiddleware,
+//   checkRole(['SchoolManager']),
+//   ValidationMiddleware({ type: 'body', schema: createAdmissionManagerSchema }),
+//   UserController.registerAdmissionManager
+// );
 
 /**
  * @swagger

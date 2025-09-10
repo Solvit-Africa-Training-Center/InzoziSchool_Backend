@@ -10,7 +10,7 @@ const router = Router();
 
 /**
  * @swagger
- * /schools/register:
+ * /api/schools/register:
  *   post:
  *     summary: Register a new school
  *     tags: [Schools]
@@ -41,7 +41,7 @@ router.post(
 
 /**
  * @swagger
- * /schools/approve/{schoolId}:
+ * /api/schools/approve/{schoolId}:
  *   patch:
  *     summary: Approve a school (Admin only)
  *     tags: [Schools]
@@ -71,7 +71,7 @@ router.patch(
 
 /**
  * @swagger
- * /schools/reject/{schoolId}:
+ * /api/schools/reject/{schoolId}:
  *   patch:
  *     summary: Reject a school (Admin only)
  *     tags: [Schools]
@@ -108,7 +108,7 @@ router.patch(
 
 /**
  * @swagger
- * /schools:
+ * /api/schools:
  *   get:
  *     summary: List all schools, optionally filtered by status
  *     tags: [Schools]
@@ -140,7 +140,7 @@ router.get(
 
 /**
  * @swagger
- * /schools/pending:
+ * /api/schools/pending:
  *   get:
  *     summary: List pending schools
  *     tags: [Schools]
@@ -165,7 +165,7 @@ router.get(
 
 /**
  * @swagger
- * /schools/approved:
+ * /api/schools/approved:
  *   get:
  *     summary: List approved schools
  *     tags: [Schools]
@@ -190,7 +190,7 @@ router.get(
 
 /**
  * @swagger
- * /schools/rejected:
+ * /api/schools/rejected:
  *   get:
  *     summary: List rejected schools
  *     tags: [Schools]
@@ -215,7 +215,7 @@ router.get(
 
 /**
  * @swagger
- * /schools/{schoolId}:
+ * /api/schools/{schoolId}:
  *   get:
  *     summary: Get school details by ID
  *     tags: [Schools]
@@ -245,7 +245,7 @@ router.get(
 
 /**
  * @swagger
- * /resubmit/{schoolId}:
+ * /api/resubmit/{schoolId}:
  *   patch:
  *     summary: Resubmit rejected school (SchoolManager only)
  *     tags: [Schools]
