@@ -9,11 +9,16 @@ const options = {
       description: 'Backend API for Inzozi School platform. Supports school search, registration, and multi-language support.',
     },
     servers: [
-      {
-        url: 'http://localhost:5000',
-        description: 'Development Server',
-      },
-    ],
+  {
+    url: 'https://inzozi-backend.onrender.com',
+    description: 'Production Server (Render)',
+  },
+  {
+    url: 'http://localhost:5000',
+    description: 'Development Server',
+  },
+],
+
     components: {
       securitySchemes: {
         bearerAuth: {
