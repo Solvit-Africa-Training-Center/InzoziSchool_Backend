@@ -44,16 +44,21 @@ export class User
   public readonly updatedAt!: Date;
   public readonly deletedAt!: Date | null;
 
+    public School?: School;
+  public RequestedSchool?: School; 
+  public ApprovedSchools?: School[]; 
+  public role?: Role;
+
    public static associate(models: { Role: typeof Role; School: typeof School }) {
   User.belongsTo(models.Role, { foreignKey: 'roleId', as: 'role' });
 
-  // If this user belongs to a school
+  
   User.belongsTo(models.School, { foreignKey: 'schoolId', as: 'School' });
 
-  // If this user created a school request
+  
   User.hasOne(models.School, { foreignKey: 'userId', as: 'RequestedSchool' });
 
-  // If this user approved a school
+  
   User.hasMany(models.School, { foreignKey: 'approvedBy', as: 'ApprovedSchools' });
 }
 

@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
   {
-    url: 'https://inzozi-backend.onrender.com',
+    url: 'https://inzozischool-backend.onrender.com/',
     description: 'Production Server (Render)',
   },
   {
@@ -207,6 +207,50 @@ const options = {
             email: { type: 'string', example: 'school@example.com' },
             district: { type: 'string', example: 'Nyarugenge' },
             licenseDocument: { type: 'string', format: 'binary', description: 'Upload updated license document' },
+          },
+        },
+                GetMeResponse: {
+          type: 'object',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                id: { type: 'string', example: 'uuid' },
+                firstName: { type: 'string', example: 'John' },
+                lastName: { type: 'string', example: 'Doe' },
+                email: { type: 'string', example: 'john@example.com' },
+                gender: { type: 'string', example: 'Male' },
+                province: { type: 'string', example: 'Kigali' },
+                district: { type: 'string', example: 'Nyarugenge' },
+                profileImage: { type: 'string', example: 'https://cdn.example.com/avatar.png' },
+                roleId: { type: 'string', example: 'uuid-role' },
+                schoolId: { type: 'string', format: 'uuid', example: 'uuid-school' },
+              },
+            },
+            message: { type: 'string', example: 'Authenticated user fetched successfully' },
+            success: { type: 'boolean', example: true },
+          },
+        },
+        GetUserByIdResponse: {
+          type: 'object',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                id: { type: 'string', example: 'uuid' },
+                firstName: { type: 'string', example: 'Jane' },
+                lastName: { type: 'string', example: 'Smith' },
+                email: { type: 'string', example: 'jane.smith@example.com' },
+                gender: { type: 'string', example: 'Female' },
+                province: { type: 'string', example: 'Kigali' },
+                district: { type: 'string', example: 'Gasabo' },
+                profileImage: { type: 'string', example: 'https://cdn.example.com/avatar.png' },
+                roleId: { type: 'string', example: 'uuid-role' },
+                schoolId: { type: 'string', format: 'uuid', example: 'uuid-school' },
+              },
+            },
+            message: { type: 'string', example: 'User fetched successfully' },
+            success: { type: 'boolean', example: true },
           },
         },
       },

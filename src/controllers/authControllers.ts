@@ -37,7 +37,7 @@ export class PasswordResetController {
 
     try {
       await PasswordResetService.requestReset(email);
-      return ResponseService({ data: null, success: true, status: 200, message: "Reset code sent", res });
+      return ResponseService({ data: null, success: true, status: 200, message: "Your reset password code has sent to your email", res });
     } catch (e: any) {
       return ResponseService({ data: null, success: false, status: 400, message: e.message, res });
     }

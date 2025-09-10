@@ -1,14 +1,15 @@
-// src/controllers/UserController.ts
 import { Request, Response } from "express";
 import { ResponseService } from "../utils/response";
 import { UserService } from "../services/userServices";
-import { CreateSchoolManagerDto, CreateAdmissionManagerDto } from "../types/userInterface";
+import { CreateSchoolManagerDto } from "../types/userInterface";
 import { IRequestUser } from "../middlewares/authMiddleware";
 
 export class UserController {
 
-  
-  static async registerSchoolManager(req: Request<{}, {}, CreateSchoolManagerDto>, res: Response) {
+  static async registerSchoolManager(
+    req: Request<{}, {}, CreateSchoolManagerDto>,
+    res: Response
+  ) {
     try {
       const user = await UserService.createSchoolManager(req.body);
       return ResponseService({
@@ -19,20 +20,10 @@ export class UserController {
         res,
       });
     } catch (error: any) {
-      return ResponseService({
-        data: null,
-        success: false,
-        status: 400,
-        message: error.message,
-        res,
-      });
+      return ResponseService({ data: null, success: false, status: 400, message: error.message, res });
     }
   }
 
- 
-
-
-  
   static async getUsers(req: IRequestUser, res: Response) {
     try {
       const users = await UserService.getAllUsers(req.user);
@@ -44,81 +35,81 @@ export class UserController {
         res
       });
     } catch (e: any) {
-      return ResponseService({
-        data: null,
-        success: false,
-        status: 400,
-        message: e.message,
-        res
-      });
+      return ResponseService({ data: null, success: false, status: 400, message: e.message, res });
     }
   }
 
-  
-  static async deleteUser(req: IRequestUser, res: Response) {
-    const { userId } = req.params;
-    if(!userId){
-        return ResponseService({
-            data: null,
-    success: false,
-    status: 400,
-    message: "UserId is required",
-    res
-        });
-    }
-    try {
-        
-      await UserService.deleteUser(req.user, userId);
-      return ResponseService({
-        data: null,
-        success: true,
-        status: 200,
-        message: "User deleted successfully",
-        res
-      });
-    } catch (e: any) {
-      return ResponseService({
-        data: null,
-        success: false,
-        status: 403,
-        message: e.message,
-        res
-      });
-    }
-  }
-
-  
-static async updateUser(req:IRequestUser,res:Response)
-   {
-  const { userId } = req.params;
-  const data = req.body;
-  if(!userId){
-        return ResponseService({
-            data: null,
-    success: false,
-    status: 400,
-    message: "UserId is required",
-    res
-        });
-    }
+  static async getMe(req: IRequestUser, res: Response) {
   try {
-    const updatedUser = await UserService.updateUser(req.user, userId, data);
+    if (!req.user?.id) {
+      return ResponseService({
+        data: null,
+        success: false,
+        status: 401,
+        message: "User not authenticated",
+        res
+      });
+    }
+
+    const user = await UserService.getMe(req.user.id);
     return ResponseService({
-      data: updatedUser,
+      data: user,
       success: true,
       status: 200,
-      message: "User updated successfully",
+      message: "Authenticated user fetched successfully",
       res
     });
   } catch (e: any) {
     return ResponseService({
       data: null,
       success: false,
-      status: 403,
+      status: 400,
       message: e.message,
       res
     });
   }
 }
 
+
+  static async getUserById(req: IRequestUser, res: Response) {
+    const { userId } = req.params;
+    if (!userId) return ResponseService({ data: null, success: false, status: 400, message: "UserId is required", res });
+
+    try {
+      const user = await UserService.getUserById(req.user, userId);
+      return ResponseService({
+        data: user,
+        success: true,
+        status: 200,
+        message: "User fetched successfully",
+        res
+      });
+    } catch (e: any) {
+      return ResponseService({ data: null, success: false, status: 403, message: e.message, res });
+    }
+  }
+
+  static async updateUser(req: IRequestUser, res: Response) {
+    const { userId } = req.params;
+    if (!userId) return ResponseService({ data: null, success: false, status: 400, message: "UserId is required", res });
+
+    try {
+      const updatedUser = await UserService.updateUser(req.user, userId, req.body);
+      return ResponseService({ data: updatedUser, success: true, status: 200, message: "User updated successfully", res });
+    } catch (e: any) {
+      return ResponseService({ data: null, success: false, status: 403, message: e.message, res });
+    }
+  }
+
+  static async deleteUser(req: IRequestUser, res: Response) {
+    const { userId } = req.params;
+    if (!userId) return ResponseService({ data: null, success: false, status: 400, message: "UserId is required", res });
+
+    try {
+      await UserService.deleteUser(req.user, userId);
+      return ResponseService({ data: null, success: true, status: 200, message: "User deleted successfully", res });
+    } catch (e: any) {
+      return ResponseService({ data: null, success: false, status: 403, message: e.message, res });
+    }
+  }
 }

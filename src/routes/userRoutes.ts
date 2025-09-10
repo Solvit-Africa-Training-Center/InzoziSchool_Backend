@@ -11,11 +11,11 @@ import {
 
 const router = Router();
 
-/** 
+/**
  * @swagger
  * /api/users/school-manager:
  *   post:
- *     summary: Register a new School Manager
+ *     summary: "Register a new School Manager"
  *     tags: [User Management]
  *     requestBody:
  *       required: true
@@ -25,7 +25,7 @@ const router = Router();
  *             $ref: '#/components/schemas/CreateSchoolManagerRequest'
  *     responses:
  *       201:
- *         description: School Manager registered successfully
+ *         description: "School Manager registered successfully"
  *         content:
  *           application/json:
  *             schema:
@@ -37,26 +37,17 @@ router.post(
   UserController.registerSchoolManager
 );
 
-
-// router.post(
-//   '/admission-manager',
-//   authMiddleware,
-//   checkRole(['SchoolManager']),
-//   ValidationMiddleware({ type: 'body', schema: createAdmissionManagerSchema }),
-//   UserController.registerAdmissionManager
-// );
-
 /**
  * @swagger
  * /api/users:
  *   get:
- *     summary: Get all users (Admin gets all, SchoolManager gets AdmissionManagers in their school)
+ *     summary: "Get all users (Admin gets all, SchoolManager gets AdmissionManagers in their school)"
  *     tags: [User Management]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of users
+ *         description: "List of users"
  *         content:
  *           application/json:
  *             schema:
@@ -71,9 +62,31 @@ router.get(
 
 /**
  * @swagger
+ * /api/users/me:
+ *   get:
+ *     summary: "Get authenticated user"
+ *     tags: [User Management]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: "Authenticated user's information"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GetMeResponse'
+ */
+router.get(
+  '/users/me',
+  authMiddleware,
+  UserController.getMe
+);
+
+/**
+ * @swagger
  * /api/users/{userId}:
- *   delete:
- *     summary: Delete a user (Admin can delete any, SchoolManager can delete AdmissionManagers in their school)
+ *   get:
+ *     summary: "Get a user by ID (Admin any user, SchoolManager: AdmissionManagers in their school)"
  *     tags: [User Management]
  *     security:
  *       - bearerAuth: []
@@ -86,7 +99,37 @@ router.get(
  *           format: uuid
  *     responses:
  *       200:
- *         description: User deleted successfully
+ *         description: "User information"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GetUserByIdResponse'
+ */
+router.get(
+  '/users/:userId',
+  authMiddleware,
+  checkRole(['Admin', 'SchoolManager']),
+  UserController.getUserById
+);
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   delete:
+ *     summary: "Delete a user (Admin any user, SchoolManager: AdmissionManagers in their school)"
+ *     tags: [User Management]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: "User deleted successfully"
  */
 router.delete(
   '/users/:userId',
@@ -118,13 +161,12 @@ router.delete(
  *             $ref: '#/components/schemas/UpdateUserRequest'
  *     responses:
  *       200:
- *         description: User updated successfully
+ *         description: "User updated successfully"
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/UpdateUserResponse'
  */
-
 router.put(
   '/users/:userId',
   authMiddleware,
