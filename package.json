@@ -15,7 +15,7 @@
   "homepage": "https://github.com/Solvit-Africa-Training-Center/InzoziSchool_Backend#readme",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
-     "start": "node dist/index.js",
+     "start": "node ./dist/index.js",
     "test": "cross-env NODE_ENV=test npm run db:migrate:undo:all && npm run db:migrate && npm run db:seed && jest --detectOpenHandles --config jest.config.ts",
     "coverage": "NODE_ENV=test jest --coverage --config jest.config.ts",
     "coveralls": "npm run coverage && cat coverage/lcov.info | npx coveralls",
