@@ -26,7 +26,7 @@ emailEmitter.on("schoolApproved", async (manager: { email: string; firstName: st
         managerName: manager.firstName,
         schoolName: school.schoolName,
         approvedAt: school.approvedAt,
-      }
+      } 
     );
     console.log(`School approval email sent to ${manager.email}`);
   } catch (err) {

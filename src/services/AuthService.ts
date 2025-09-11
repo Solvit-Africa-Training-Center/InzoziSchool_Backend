@@ -3,6 +3,7 @@ import { comparePassword, generateToken, destroyToken } from "../utils/helper";
 import { hashPassword } from "../utils/helper";
 import { redis } from "../utils/redis";
 import { emailEmitter } from "../events/emailEvent";
+import { School } from "../database/models/School";
 interface LoginDto {
   email: string;
   password: string;
@@ -10,42 +11,61 @@ interface LoginDto {
 
 export class AuthService {
   
-  async login(dto: LoginDto) {
-    const user = await User.findOne({ where: { email: dto.email } });
-    
-    if (!user) {
-      return { success: false, status: 404, message: "User not Found", data: null };
-    }
-
-    
-    if (!user.password) {
-  return { success: false, status: 500, message: "User password not set", data: null };
-}
-
-const isMatch = await comparePassword(dto.password, user.password);
-if (!isMatch) 
-  return { success: false, status: 401, message: "Incorrect email or password", data: null };
-    
-    if (!user.id || !user.email || !user.roleId) {
-      return { success: false, status: 500, message: "User data incomplete for token generation", data: null };
-    }
-
-    
-    const token = await generateToken({
-      id: user.id,
-      email: user.email,
-      role: user.roleId,
-    });
-
-    return {
-      success: true,
-      status: 200,
-      message: "Login successful",
-      data: {
-      token,
-      },
-    };
+ async login(dto: LoginDto) {
+  const user = await User.findOne({ where: { email: dto.email } });
+  
+  if (!user) {
+    return { success: false, status: 404, message: "User not Found", data: null };
   }
+
+  if (!user.password) {
+    return { success: false, status: 500, message: "User password not set", data: null };
+  }
+
+  const isMatch = await comparePassword(dto.password, user.password);
+  if (!isMatch) {
+    return { success: false, status: 401, message: "Incorrect email or password", data: null };
+  }
+
+  if (!user.id || !user.email || !user.roleId) {
+    return { success: false, status: 500, message: "User data incomplete for token generation", data: null };
+  }
+
+  const token = await generateToken({
+    id: user.id,
+    email: user.email,
+    role: user.roleId,
+  });
+
+  
+  let schoolStatus: "not_registered" | "pending" | "approved" | "rejected" = "not_registered";
+
+  
+  if (user.roleId === "SchoolManager") {
+    const school = await School.findOne({ where: { userId: user.id } });
+
+    if (school) {
+      if (school.status === "pending") schoolStatus = "pending";
+      if (school.status === "approved") schoolStatus = "approved";
+      if (school.status === "rejected") schoolStatus = "rejected";
+    }
+  }
+
+  return {
+    success: true,
+    status: 200,
+    message: "Login successful",
+    data: {
+      user: {
+        id: user.id,
+        email: user.email,
+        roleId: user.roleId,
+      },
+      token,
+      schoolStatus, 
+    },
+  };
+}
 
   // Logout
   async logout(token: string | undefined) {
