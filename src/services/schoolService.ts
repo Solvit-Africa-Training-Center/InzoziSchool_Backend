@@ -9,7 +9,7 @@ export const registerSchool = async (userId: string, data: ISchoolRegister) => {
   return School.create({
     ...data,
     userId, 
-    status: 'pending',
+    status: 'in_progress',
   });
   
 };
@@ -77,7 +77,7 @@ export const getSchools = async (
   limit: number,
   offset: number,
   page: number,
-  status?: 'pending' | 'approved' | 'rejected'
+  status?: 'pending' | 'in_progress'|'approved' | 'rejected'
 ) => {
   const whereClause = status ? { status } : {};
 

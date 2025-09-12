@@ -4,68 +4,91 @@ import { hashPassword } from "../utils/helper";
 import { redis } from "../utils/redis";
 import { emailEmitter } from "../events/emailEvent";
 import { School } from "../database/models/School";
+import { Role } from "../database/models/Roles";
+import { name } from "ejs";
+
 interface LoginDto {
   email: string;
   password: string;
 }
 
 export class AuthService {
-  
- async login(dto: LoginDto) {
-  const user = await User.findOne({ where: { email: dto.email } });
-  
-  if (!user) {
-    return { success: false, status: 404, message: "User not Found", data: null };
-  }
 
-  if (!user.password) {
-    return { success: false, status: 500, message: "User password not set", data: null };
-  }
+  async login(dto: LoginDto) {
+    
+    const user = await User.findOne({
+      where: { email: dto.email },
+      include: [{ model: Role, as: "role", attributes: ["id", "name"] }],
+    });
 
-  const isMatch = await comparePassword(dto.password, user.password);
-  if (!isMatch) {
-    return { success: false, status: 401, message: "Incorrect email or password", data: null };
-  }
-
-  if (!user.id || !user.email || !user.roleId) {
-    return { success: false, status: 500, message: "User data incomplete for token generation", data: null };
-  }
-
-  const token = await generateToken({
-    id: user.id,
-    email: user.email,
-    role: user.roleId,
-  });
-
-  
-  let schoolStatus: "not_registered" | "pending" | "approved" | "rejected" = "not_registered";
-
-  
-  if (user.roleId === "SchoolManager") {
-    const school = await School.findOne({ where: { userId: user.id } });
-
-    if (school) {
-      if (school.status === "pending") schoolStatus = "pending";
-      if (school.status === "approved") schoolStatus = "approved";
-      if (school.status === "rejected") schoolStatus = "rejected";
+    if (!user) {
+      return { success: false, status: 404, message: "User not Found", data: null };
     }
-  }
 
-  return {
-    success: true,
-    status: 200,
-    message: "Login successful",
-    data: {
+    if (!user.password) {
+      return { success: false, status: 500, message: "User password not set", data: null };
+    }
+
+    const isMatch = await comparePassword(dto.password, user.password);
+    if (!isMatch) {
+      return { success: false, status: 401, message: "Incorrect email or password", data: null };
+    }
+
+    if (!user.id || !user.email || !user.role) {
+      return { success: false, status: 500, message: "User data incomplete for token generation", data: null };
+    }
+
+    const token = await generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role.id,
+    });
+
+    // Default school status (only for SchoolManager)
+    let schoolStatus: "not_registered" | "pending" | "approved" | "rejected" | null = null;
+
+    if (user.role.name === "SchoolManager") {
+      const school = await School.findOne({ where: { userId: user.id } });
+      if (!school) {
+        schoolStatus = "not_registered";
+      } else {
+        switch (school.status) {
+          case "pending":
+          case "in_progress":
+            schoolStatus = "pending"; // mapped to pending for frontend
+            break;
+          case "approved":
+            schoolStatus = "approved";
+            break;
+          case "rejected":
+            schoolStatus = "rejected";
+            break;
+          default:
+            schoolStatus = "not_registered";
+        }
+      }
+    }
+
+    const responseData: any = {
       user: {
-        id: user.id,
+        
         email: user.email,
-        roleId: user.roleId,
+        name:user.firstName + ' ' + user.lastName,
+        roleName: user.role.name,
       },
       token,
-      schoolStatus, 
-    },
-  };
-}
+    };
+
+    if (schoolStatus) responseData.schoolStatus = schoolStatus;
+
+    return {
+      success: true,
+      status: 200,
+      message: "Login successful",
+      data: responseData,
+    };
+  }
+
 
   // Logout
   async logout(token: string | undefined) {

@@ -45,9 +45,9 @@ const options = {
                 user: {
                   type: 'object',
                   properties: {
-                    id: { type: 'string' },
+                    name:{ type: 'string' },
                     email: { type: 'string' },
-                    roleId: { type: 'string' },
+                    roleName:{type:'string'},
                   },
                 },
                 token: { type: 'string' },
@@ -209,6 +209,8 @@ const options = {
             licenseDocument: { type: 'string', format: 'binary', description: 'Upload updated license document' },
           },
         },
+
+        
                 GetMeResponse: {
           type: 'object',
           properties: {
