@@ -18,7 +18,7 @@ export interface SchoolAttributes {
   village?: string | null;
   email: string;
   telephone?: string | null;
-  status: "pending" | "in_progress" | "approved" | "rejected"; 
+  status:"not_registered"| "pending" |  "approved" | "rejected"; 
   rejectedReason?: string | null;
   licenseDocument?: string | null;
   userId: string;
@@ -44,7 +44,7 @@ export interface CreationAttributes
   > {
   id?: string;
   licenseDocument?: string;
-  status?: "pending" | "in_progress" | "approved" | "rejected";
+  status?: "not_registered"|"pending" | "approved" | "rejected";
   approvedBy?: string;
   approvedAt?: Date | null;
 }
@@ -63,7 +63,7 @@ export class School extends Model<SchoolAttributes, CreationAttributes> {
   public village?: string;
   public email!: string;
   public telephone?: string;
-  public status!: "pending" | "in_progress" | "approved" | "rejected";
+  public status!: "not_registered"|"pending" | "approved" | "rejected";
   public licenseDocument?: string;
   public userId!: string;
   public approvedBy?: string | null;
@@ -123,7 +123,7 @@ export const SchoolModel = (sequelize: Sequelize) => {
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
       telephone: { type: DataTypes.STRING, allowNull: true },
       status: {
-        type: DataTypes.ENUM("pending", "in_progress", "approved", "rejected"),
+        type: DataTypes.ENUM("not_registered","pending",  "approved", "rejected"),
         allowNull: false,
         defaultValue: "pending",
       },

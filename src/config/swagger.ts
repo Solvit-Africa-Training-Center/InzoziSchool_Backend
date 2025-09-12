@@ -103,6 +103,39 @@ const options = {
             schoolId: { type: 'string', format: 'uuid', example: null },
           },
         },
+
+        GetUsersResponse: {
+  type: 'object',
+  properties: {
+    id: { type: 'string', format: 'uuid', example: 'c8b248f1-4a57-44ae-a159-801715e7aeae' },
+    firstName: { type: 'string', example: 'Admission' },
+    lastName: { type: 'string', example: 'Manager' },
+    gender: { type: 'string', example: 'Other' },
+    province: { type: ['string', 'null'], example: null },
+    district: { type: 'string', example: 'Kigali' },
+    email: { type: 'string', format: 'email', example: 'admissionmanager@example.com' },
+    password: { type: 'string', example: '$2b$10$bCPQF2xg6WpDItpseQQcu.SJrQuObaZ1aSN4Niul77djTvrq.PB56' },
+    roleId: { type: 'string', format: 'uuid', example: 'ffaa293f-a7b7-4d6b-b8a9-640fadc2ed18' },
+    profileImage: { type: ['string', 'null'], example: null },
+    schoolId: { type: ['string', 'null'], example: null },
+    deletedAt: { type: ['string', 'null'], format: 'date-time', example: null },
+    createdAt: { type: 'string', format: 'date-time', example: '2025-09-12T07:11:20.128Z' },
+    updatedAt: { type: 'string', format: 'date-time', example: '2025-09-12T07:11:20.128Z' },
+    role: {
+      type: 'object',
+      properties: {
+        id: { type: 'string', format: 'uuid', example: 'ffaa293f-a7b7-4d6b-b8a9-640fadc2ed18' },
+        name: { type: 'string', example: 'AdmissionManager' }
+      }
+    },
+    School: {
+      type: ['object', 'null'],
+      nullable: true,
+      example: null
+    }
+  }
+},
+
         CreateSchoolManagerResponse: {
           type: 'object',
           properties: {

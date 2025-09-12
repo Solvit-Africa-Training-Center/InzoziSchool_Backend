@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import * as SchoolService from '../services/schoolService';
 import { ResponseService } from '../utils/response';

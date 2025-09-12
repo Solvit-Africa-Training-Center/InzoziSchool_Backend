@@ -18,6 +18,7 @@ module.exports = {
       level: { type: Sequelize.ENUM('Nursery', 'Primary', 'O-level', 'A-level'), allowNull: false },
       studentType: { type: Sequelize.ENUM('newcomer', 'transfer'), allowNull: false },
       academicYear: { type: Sequelize.STRING, allowNull: false },
+      yearofstudy: { type: Sequelize.STRING, allowNull: false },
       totalSpots: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
       occupiedSpots: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
       registrationOpen: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true },

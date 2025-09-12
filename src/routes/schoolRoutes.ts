@@ -2,8 +2,9 @@
 import { Router } from 'express';
 import { authMiddleware, checkRole } from '../middlewares/authMiddleware';
 import { ValidationMiddleware } from '../middlewares/validationMiddleware';
-import { SchoolRegisterSchema, RejectSchoolSchema } from '../schema/school';
+import { SchoolRegisterSchema, RejectSchoolSchema,CreateSchoolGallerySchema,CreateSchoolSpotSchema } from '../schema/school';
 import * as SchoolController from '../controllers/schoolController';
+import * as SchoolEntitiesController from  '../controllers/schoolEntitiesController'
 import { upload } from '../middlewares/uploadMiddleware';
 
 const router = Router();
@@ -280,4 +281,17 @@ router.patch(
   SchoolController.resubmitSchool
 );
 
+// School profile
+router.get('/:schoolId/profile', authMiddleware, SchoolEntitiesController.getProfile);
+router.put('/:schoolId/profile', authMiddleware,checkRole(['SchoolManager']), SchoolEntitiesController.updateProfile);
+
+// School spots
+router.post('/:schoolId/spots', authMiddleware,checkRole(['SchoolManager']), ValidationMiddleware({ type: 'body', schema:CreateSchoolSpotSchema }), SchoolEntitiesController.createSpot);
+router.put('/:schoolId/spots/:id', authMiddleware, checkRole(['SchoolManager']),SchoolEntitiesController.updateSpot);
+router.get('/:schoolId/spots', authMiddleware, SchoolEntitiesController.listSpots);
+
+// School gallery
+router.post('/:schoolId/gallery', authMiddleware,checkRole(['SchoolManager']), upload.array('file'), ValidationMiddleware({ type: 'body', schema:CreateSchoolGallerySchema}), SchoolEntitiesController.addGallery);
+router.get('/:schoolId/gallery', authMiddleware,checkRole(['SchoolManager']), SchoolEntitiesController.listGallery);
+router.put('/:schoolId/gallery/:id', authMiddleware, checkRole(['SchoolManager']),SchoolEntitiesController.updateGallery);
 export default router;

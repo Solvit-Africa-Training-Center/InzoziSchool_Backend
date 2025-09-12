@@ -5,7 +5,7 @@ import { redis } from "../utils/redis";
 import { emailEmitter } from "../events/emailEvent";
 import { School } from "../database/models/School";
 import { Role } from "../database/models/Roles";
-import { name } from "ejs";
+
 
 interface LoginDto {
   email: string;
@@ -44,7 +44,7 @@ export class AuthService {
       role: user.role.id,
     });
 
-    // Default school status (only for SchoolManager)
+    
     let schoolStatus: "not_registered" | "pending" | "approved" | "rejected" | null = null;
 
     if (user.role.name === "SchoolManager") {
@@ -53,8 +53,8 @@ export class AuthService {
         schoolStatus = "not_registered";
       } else {
         switch (school.status) {
+          case "not_registered":
           case "pending":
-          case "in_progress":
             schoolStatus = "pending"; // mapped to pending for frontend
             break;
           case "approved":

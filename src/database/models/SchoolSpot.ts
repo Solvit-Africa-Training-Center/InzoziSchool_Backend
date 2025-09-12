@@ -5,6 +5,7 @@ export interface AdmissionConditions {
   minGrade?: string;
   requiredSubjects?: string[];
   examScore?: string;
+  yearofstudy?:string;
   interviewRequired?: boolean;
   documents?: string[];
   notes?: string;
@@ -15,10 +16,11 @@ export interface SchoolSpotAttributes {
   schoolId: string;
   level: 'Nursery' | 'Primary' | 'O-level' | 'A-level';
   studentType: 'newcomer' | 'transfer';
+  yearofstudy:string;
   academicYear: string;
   totalSpots: number;
-  occupiedSpots: number;
-  registrationOpen: boolean;
+  occupiedSpots?: number;
+  registrationOpen?: boolean;
   waitingListCount?: number;
   combination?: string[];
   admissionConditions?: AdmissionConditions;
@@ -29,9 +31,19 @@ export interface SchoolSpotAttributes {
 }
 
 export interface SchoolSpotCreationAttributes
-  extends Omit<SchoolSpotAttributes, 'id' | 'createdAt' | 'updatedAt' | 'availableSpots'> {
+  extends Omit<
+    SchoolSpotAttributes,
+    'id' | 'createdAt' | 'updatedAt' | 'availableSpots'
+  > {
   id?: string;
+  occupiedSpots?: number;       
+  registrationOpen?: boolean;   
+  waitingListCount?: number;    
+  combination?: string[];       
+  admissionConditions?: AdmissionConditions; 
+  availableSpots?: number;
 }
+
 
 export class SchoolSpot extends Model<SchoolSpotAttributes, SchoolSpotCreationAttributes>
   implements SchoolSpotAttributes {
@@ -39,6 +51,7 @@ export class SchoolSpot extends Model<SchoolSpotAttributes, SchoolSpotCreationAt
   public schoolId!: string;
   public level!: 'Nursery' | 'Primary' | 'O-level' | 'A-level';
   public studentType!: 'newcomer' | 'transfer';
+  public yearofstudy!: string;
   public academicYear!: string;
   public totalSpots!: number;
   public occupiedSpots!: number;
@@ -67,6 +80,7 @@ export const SchoolSpotModel = (sequelize: Sequelize) => {
       schoolId: { type: DataTypes.UUID, allowNull: false },
       level: { type: DataTypes.ENUM('Nursery', 'Primary', 'O-level', 'A-level'), allowNull: false },
       studentType: { type: DataTypes.ENUM('newcomer', 'transfer'), allowNull: false },
+      yearofstudy:{type:DataTypes.STRING,allowNull:false},
       academicYear: { type: DataTypes.STRING, allowNull: false },
       totalSpots: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
       occupiedSpots: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
