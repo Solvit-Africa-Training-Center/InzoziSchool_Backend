@@ -21,6 +21,35 @@ export class UserService {
 
     return user;
   }
+static async createAdmissionManager(
+  schoolId: string,
+  data: CreateAdmissionManagerDto,
+  currentUser: { id?: string; role?: string; schoolId?: string }
+): Promise<User> {
+  
+  if (currentUser.role !== 'SchoolManager') {
+    throw new Error('Only School Managers can create an Admission Manager');
+  }
+
+  if (currentUser.schoolId !== schoolId) {
+    throw new Error('You are not authorized to create Admission Managers for this school');
+  }
+
+  const role = await Role.findOne({ where: { name: 'AdmissionManager' } });
+  if (!role) throw new Error('AdmissionManager role not found');  
+
+  const hashedPassword = await hashPassword(data.password);
+  const user = await User.create({
+    ...data,
+    password: hashedPassword,
+    roleId: role.id,
+    schoolId,            
+    
+  });
+
+  return user;
+}
+
 
   
   static async getAllUsers(requestingUser: any) {

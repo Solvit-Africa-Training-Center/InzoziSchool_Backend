@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import { authMiddleware, checkRole } from '../middlewares/authMiddleware';
 import { ValidationMiddleware } from '../middlewares/validationMiddleware';
-import { SchoolRegisterSchema, RejectSchoolSchema,CreateSchoolGallerySchema,CreateSchoolSpotSchema } from '../schema/school';
+import { SchoolRegisterSchema, RejectSchoolSchema,CreateSchoolGallerySchema,CreateSchoolSpotSchema,updateSchoolInfoSchema,UpdateSchoolProfileSchema} from '../schema/school';
 import * as SchoolController from '../controllers/schoolController';
 import * as SchoolEntitiesController from  '../controllers/schoolEntitiesController'
 import { upload } from '../middlewares/uploadMiddleware';
@@ -207,12 +207,8 @@ router.get(
  *               items:
  *                 $ref: '#/components/schemas/SchoolResponse'
  */
-router.get(
-  '/schools/rejected',
-  authMiddleware,
-  checkRole(['Admin']),
-  SchoolController.listRejectedSchools
-);
+router.get('/schools/rejected',authMiddleware,checkRole(['Admin']),SchoolController.listRejectedSchools);
+  
 
 /**
  * @swagger
@@ -237,12 +233,65 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/SchoolResponse'
  */
-router.get(
+router.get('/schools/:schoolId', authMiddleware,checkRole(['Admin', 'SchoolManager']),SchoolController.getSchoolDetails);
+        
+ 
+  
+  /**
+ * @swagger
+ * /api/schools/{schoolId}:
+ *   put:
+ *     summary: Update school information (SchoolManager only)
+ *     tags: [Schools]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the school to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateSchoolInfoSchema'
+ *     responses:
+ *       200:
+ *         description: School information updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "School information updated successfully"
+ *                 data:
+ *                   type: object
+ *                   description: Updated school object
+ *       400:
+ *         description: Bad request (validation error)
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (not a SchoolManager)
+ *       404:
+ *         description: School not found
+ */
+router.put(
   '/schools/:schoolId',
   authMiddleware,
-  checkRole(['Admin', 'SchoolManager']),
-  SchoolController.getSchoolDetails
+  checkRole(['SchoolManager']),
+  ValidationMiddleware({ type: 'body', schema: updateSchoolInfoSchema }),
+  SchoolEntitiesController.updateSchoolInfo
 );
+ 
 
 /**
  * @swagger
@@ -281,17 +330,379 @@ router.patch(
   SchoolController.resubmitSchool
 );
 
-// School profile
+/**
+ * @swagger
+ * /api/schools/{schoolId}/profile:
+ *   get:
+ *     summary: Get school profile
+ *     tags: [Schools]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: School profile retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UpdateSchoolProfileSchema'
+ */
 router.get('/:schoolId/profile', authMiddleware, SchoolEntitiesController.getProfile);
-router.put('/:schoolId/profile', authMiddleware,checkRole(['SchoolManager']), SchoolEntitiesController.updateProfile);
 
-// School spots
-router.post('/:schoolId/spots', authMiddleware,checkRole(['SchoolManager']), ValidationMiddleware({ type: 'body', schema:CreateSchoolSpotSchema }), SchoolEntitiesController.createSpot);
-router.put('/:schoolId/spots/:id', authMiddleware, checkRole(['SchoolManager']),SchoolEntitiesController.updateSpot);
-router.get('/:schoolId/spots', authMiddleware, SchoolEntitiesController.listSpots);
+/**
+ * @swagger
+ * /api/schools/{schoolId}:
+ *   delete:
+ *     summary: Delete a school (Admin only)
+ *     tags: [Schools]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: School deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: School deleted successfully
+ *                 data:
+ *                   type: string
+ *                   nullable: true
+ *                   example: null
+ *       400:
+ *         description: Bad request (validation error)
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (not an Admin)
+ *       404:
+ *         description: School not found
+ */
+router.delete(
+  '/schools/:schoolId',
+  authMiddleware,
+  checkRole(['Admin']),
+  SchoolController.deleteSchool
+);
 
-// School gallery
-router.post('/:schoolId/gallery', authMiddleware,checkRole(['SchoolManager']), upload.array('file'), ValidationMiddleware({ type: 'body', schema:CreateSchoolGallerySchema}), SchoolEntitiesController.addGallery);
-router.get('/:schoolId/gallery', authMiddleware,checkRole(['SchoolManager']), SchoolEntitiesController.listGallery);
-router.put('/:schoolId/gallery/:id', authMiddleware, checkRole(['SchoolManager']),SchoolEntitiesController.updateGallery);
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/profile:
+ *   put:
+ *     summary: Update school profile (SchoolManager only)
+ *     tags: [Schools]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateSchoolProfileSchema'
+ *     responses:
+ *       200:
+ *         description: School profile updated successfully
+ */
+router.put(
+  '/schools/:schoolId/profile',
+  authMiddleware,
+  checkRole(['SchoolManager']),
+  upload.single('profilePhoto'),
+  ValidationMiddleware({ type: 'body', schema: UpdateSchoolProfileSchema }),
+  SchoolEntitiesController.updateProfile
+);
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/spots:
+ *   post:
+ *     summary: Create a new school spot (SchoolManager or AdmissionManager)
+ *     tags: [School Spots]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateSchoolSpotSchema'
+ *     responses:
+ *       201:
+ *         description: School spot created successfully
+ */
+router.post(
+  '/schools/:schoolId/spots',
+  authMiddleware,
+  checkRole(['SchoolManager', 'AdmissionManager']),
+  ValidationMiddleware({ type: 'body', schema: CreateSchoolSpotSchema }),
+  SchoolEntitiesController.createSpot
+);
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/spots/{id}:
+ *   put:
+ *     summary: Update a school spot (SchoolManager or AdmissionManager)
+ *     tags: [School Spots]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateSchoolSpotSchema'
+ *     responses:
+ *       200:
+ *         description: School spot updated successfully
+ */
+router.put(
+  '/schools/:schoolId/spots/:id',
+  authMiddleware,
+  checkRole(['SchoolManager', 'AdmissionManager']),
+  SchoolEntitiesController.updateSpot
+);
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/spots:
+ *   get:
+ *     summary: List all spots of a school
+ *     tags: [School Spots]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of school spots
+ */
+router.get('/schools/:schoolId/spots', authMiddleware, SchoolEntitiesController.listSpots);
+/**
+ * @swagger
+ * /api/schools/{schoolId}/spots/{id}:
+ *   delete:
+ *     summary: Delete a school spot (SchoolManager or AdmissionManager)
+ *     tags: [School Spots]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: School spot deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: School spot deleted successfully
+ *                 data:
+ *                   type: string
+ *                   nullable: true
+ *                   example: null
+ */
+router.delete(
+  '/schools/:schoolId/spots/:id',
+  authMiddleware,
+  checkRole(['SchoolManager', 'AdmissionManager']),
+  SchoolEntitiesController.deleteSchoolSpot
+);
+
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/gallery:
+ *   post:
+ *     summary: Add images to school gallery (SchoolManager only)
+ *     tags: [School Gallery]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateSchoolGallerySchema'
+ *     responses:
+ *       201:
+ *         description: Gallery item created successfully
+ */
+router.post(
+  '/schools/:schoolId/gallery',
+  authMiddleware,
+  checkRole(['SchoolManager']),
+  upload.single('imageUrl'),
+  ValidationMiddleware({ type: 'body', schema: CreateSchoolGallerySchema }),
+  SchoolEntitiesController.addGallery
+);
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/gallery:
+ *   get:
+ *     summary: List all gallery items of a school
+ *     tags: [School Gallery]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of gallery items
+ */
+router.get('/schools/:schoolId/gallery', authMiddleware, SchoolEntitiesController.listGallery);
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/gallery/{id}:
+ *   put:
+ *     summary: Update a gallery item (SchoolManager only)
+ *     tags: [School Gallery]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateSchoolGallerySchema'
+ *     responses:
+ *       200:
+ *         description: Gallery item updated successfully
+ */
+router.put(
+  '/schools/:schoolId/gallery/:id',
+  authMiddleware,
+  checkRole(['SchoolManager']),
+  upload.single('imageUrl'),
+  SchoolEntitiesController.updateGallery
+);
+
+
+
+/**
+ * @swagger
+ * /api/schools/{schoolId}/gallery/{id}:
+ *   delete:
+ *     summary: Delete a gallery item (SchoolManager only)
+ *     tags: [School Gallery]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Gallery item deleted successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Gallery item not found
+ */
+router.delete(
+  '/schools/:schoolId/gallery/:id',
+  authMiddleware,
+  checkRole(['SchoolManager']),
+  SchoolEntitiesController.deleteGallery
+);
+
+
+router.get('/schools/search',  SchoolController.SchoolSearch);
+
 export default router;

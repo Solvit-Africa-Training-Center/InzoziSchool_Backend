@@ -28,14 +28,14 @@ export const UpdateSchoolProfileSchema = Joi.object({
   accreditation: Joi.string().optional(),
   languagesOffered: Joi.array().items(Joi.string()).optional(),
   extracurriculars: Joi.array().items(Joi.string()).optional(),
-  profilePhoto: Joi.string().uri().optional(),
+  profilePhoto: Joi.string().optional(),
 });
 
 export const CreateSchoolSpotSchema = Joi.object({
   level: Joi.string().valid('Nursery', 'Primary', 'O-level', 'A-level').required(),
   studentType: Joi.string().valid('newcomer', 'transfer').required(),
   academicYear: Joi.string().required(),
-   yearofstudy:Joi.string().required,
+  yearofstudy:Joi.string().required(),
   totalSpots: Joi.number().integer().min(0).required(),
   occupiedSpots: Joi.number().integer().min(0).optional(),
   registrationOpen: Joi.boolean().optional(),
@@ -70,7 +70,24 @@ export const CreateSchoolGallerySchema = Joi.object({
       'playground'
     )
     .required(),
+    imageUrl:Joi.string().optional(),
   caption: Joi.string().optional(),
   isFeatured: Joi.boolean().optional(),
   order: Joi.number().integer().min(0).optional(),
+});
+
+export const updateSchoolInfoSchema = Joi.object({
+  schoolName: Joi.string().optional(),
+  schoolCode: Joi.string().optional(),
+  schoolCategory: Joi.string().valid('REB', 'RTB').optional().allow(null),
+  schoolLevel: Joi.string().valid('Nursery', 'Primary', 'O-Level', 'A-Level').optional().allow(null),
+  schoolType: Joi.string().valid('Girls','Boys','Mixed').optional().allow(null),
+  province: Joi.string().optional().allow(null),
+  district: Joi.string().optional(),
+  sector: Joi.string().optional().allow(null),
+  cell: Joi.string().optional().allow(null),
+  village: Joi.string().optional().allow(null),
+  email: Joi.string().email().optional(),
+  telephone: Joi.string().optional().allow(null),
+  licenseDocument: Joi.string().optional().allow(null),
 });

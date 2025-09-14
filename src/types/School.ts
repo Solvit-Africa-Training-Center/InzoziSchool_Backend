@@ -75,3 +75,14 @@ export interface ICreateSchoolGallery {
   isFeatured?: boolean;
   order?: number;
 }
+
+export interface SearchFilters {
+  district?: string | undefined;
+  schoolType?: string | undefined;
+  schoolLevel?: string | undefined;
+  schoolCategory?: string | undefined;
+  yearOfStudy?: string | undefined;
+  combination?: string | undefined; 
+  academicYear?: string | undefined;
+  minAvailableSpots?: number | undefined; 
+}

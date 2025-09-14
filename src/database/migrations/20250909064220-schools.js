@@ -113,18 +113,10 @@ module.exports = {
     await queryInterface.addIndex('schools', ['status']);
     await queryInterface.addIndex('schools', ['approvedBy']);
 
-     await queryInterface.addConstraint('users', {
-      fields: ['schoolId'],
-      type: 'foreign key',
-      name: 'fk_user_school',
-      references: { table: 'schools', field: 'id' },
-      onDelete: 'SET NULL',
-    }); 
   },
 
   async down(queryInterface) {
     await queryInterface.dropTable('schools');
-    await queryInterface.removeConstraint('users', 'fk_user_school');
     await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_schools_schoolCategory";');
     await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_schools_schoolLevel";');
     await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_schools_schoolType";');

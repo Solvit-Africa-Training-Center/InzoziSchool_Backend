@@ -36,6 +36,42 @@ router.post(
   ValidationMiddleware({ type: 'body', schema: createSchoolManagerSchema }),
   UserController.registerSchoolManager
 );
+/**
+ * @swagger
+ * /api/users/{schoolId}/admission-manager:
+ *   post:
+ *     summary: Create an Admission Manager (SchoolManager only)
+ *     tags: [User Management]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: schoolId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateAdmissionManagerRequest'
+ *     responses:
+ *       201:
+ *         description: Admission Manager created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CreateAdmissionManagerResponse'
+ */
+router.post(
+  '/users/:schoolId/admission-manager',
+  authMiddleware,
+  checkRole(['SchoolManager']),
+  ValidationMiddleware({ type: 'body', schema: createAdmissionManagerSchema }),
+  UserController.createAdmissionManager
+);
 
 /**
  * @swagger
@@ -173,5 +209,8 @@ router.put(
   ValidationMiddleware({ type: 'body', schema: updateUserSchema }),
   UserController.updateUser 
 );
+
+
+
 
 export default router;

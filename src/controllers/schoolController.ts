@@ -4,6 +4,7 @@ import { ResponseService } from '../utils/response';
 import { uploadToCloud } from '../utils/uploadHelper';
 import { IRequestUser } from '../middlewares/authMiddleware';
 import { getPagedResult, getPagination } from '../utils/pagination';
+import { SearchFilters } from '../types/School';
 
 const getUserId = (req: IRequestUser): string => {
   if (!req.user || !req.user.id) {
@@ -352,6 +353,76 @@ export const resubmitSchool = async (req: IRequestUser, res: Response) => {
       status: 500,
       success: false,
       message: 'Failed to resubmit school',
+      res,
+    });
+  }
+};
+export const deleteSchool = async (req: IRequestUser, res: Response) => {
+  try {
+    const { schoolId } = req.params;
+    if (!schoolId) {  
+      return ResponseService({
+        data: null, 
+        status: 400,
+        success: false,
+        message: 'School ID is required',
+        res,
+      });
+    }
+    await SchoolService.deleteSchool(schoolId);
+    return ResponseService({
+      data: null,
+      status: 200,
+      success: true,
+      message: 'School deleted successfully',
+      res,
+    });
+  } catch (error: any) {
+    return ResponseService({
+      data: error.message || error,
+      status: 500,
+      success: false,
+      message: 'Failed to delete school',
+      res,
+    });
+  } 
+};
+export const SchoolSearch = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { page: pageQuery, limit: limitQuery, ...queryFilters } = req.query;
+
+    const { page, limit, offset } = getPagination(
+      parseInt(pageQuery as string) || 1,
+      parseInt(limitQuery as string) || 10
+    );
+
+    // Build filters object
+    const filters: SearchFilters = {
+      district: queryFilters.district ? String(queryFilters.district) : undefined,
+      schoolType: queryFilters.schoolType ? String(queryFilters.schoolType) : undefined,
+      schoolLevel: queryFilters.schoolLevel ? String(queryFilters.schoolLevel) : undefined,
+      schoolCategory: queryFilters.schoolCategory ? String(queryFilters.schoolCategory) : undefined,
+      yearOfStudy: queryFilters.yearOfStudy ? String(queryFilters.yearOfStudy) : undefined,
+      combination: queryFilters.combination ? String(queryFilters.combination) : undefined,
+      academicYear: queryFilters.academicYear ? String(queryFilters.academicYear) : undefined,
+      minAvailableSpots: queryFilters.minAvailableSpots ? parseInt(String(queryFilters.minAvailableSpots)) : undefined,
+    };
+
+    const result = await SchoolService.searchSchools(limit, offset, page, filters);
+
+    return ResponseService({
+      data: result,
+      status: 200,
+      success: true,
+      message: 'Schools retrieved successfully',
+      res,
+    });
+  } catch (error: any) {
+    return ResponseService({
+      data: error.message || error,
+      status: 500,
+      success: false,
+      message: 'Failed to search schools',
       res,
     });
   }

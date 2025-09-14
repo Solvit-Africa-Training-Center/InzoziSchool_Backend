@@ -112,4 +112,56 @@ export class UserController {
       return ResponseService({ data: null, success: false, status: 403, message: e.message, res });
     }
   }
+
+  static async createAdmissionManager(req: IRequestUser, res: Response) {
+  try {
+    const { schoolId } = req.params;
+
+    
+    if (!req.user?.id) {
+      return ResponseService({
+        data: null,
+        success: false,
+        status: 401,
+        message: "User not authenticated",
+        res,
+      });
+    }
+
+    
+    if (!schoolId) {
+      return ResponseService({
+        data: null,
+        status: 400,
+        success: false,
+        message: 'School ID is required',
+        res,
+      });
+    }
+
+    
+    const newUser = await UserService.createAdmissionManager(schoolId,req.body,req.user);
+            
+
+    return ResponseService({
+      data: newUser,
+      success: true,
+      status: 201,
+      message: "Admission Manager created successfully",
+      res,
+    });
+
+  } catch (e: any) {
+    return ResponseService({
+      data: null,
+      success: false,
+      status: 400,
+      message: e.message || "Failed to create Admission Manager",
+      res,
+    });
+  }
+}
+
+
+
 }

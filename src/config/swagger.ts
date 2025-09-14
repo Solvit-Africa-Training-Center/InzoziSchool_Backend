@@ -185,20 +185,14 @@ const options = {
 
           SchoolRegisterRequest: {
           type: 'object',
-          required: ['schoolName', 'schoolCode', 'email', 'district'],
+          required: ['schoolName', 'schoolCode', 'email', 'district','licenseDocument'],
           properties: {
             schoolName: { type: 'string', example: 'Akagera High School' },
             schoolCode: { type: 'string', example: '1234567' },
             email: { type: 'string', example: 'school@example.com' },
             district: { type: 'string', example: 'Nyarugenge' },
             licenseDocument: { type: 'string', format: 'binary', description: 'Upload license document' },
-            province: { type: 'string', example: 'Kigali' },
-            sector: { type: 'string', example: 'Sector 1' },
-            cell: { type: 'string', example: 'Cell A' },
-            village: { type: 'string', example: 'Village X' },
-            schoolCategory: { type: 'string', enum: ['REB', 'RTB'], example: 'REB' },
-            schoolLevel: { type: 'string', enum: ['Nursery', 'Primary', 'O-Level', 'A-Level'], example: 'O-Level' },
-            schoolType: { type: 'string', enum: ['Girls', 'Boys', 'Mixed'], example: 'Mixed' },
+            
           },
         },
         SchoolResponse: {
@@ -288,10 +282,208 @@ const options = {
             success: { type: 'boolean', example: true },
           },
         },
+        
+
+
+        CreateAdmissionManagerRequest: {
+  type: 'object',
+  required: ['firstName','lastName','email','password','gender','district','schoolId',],
+    
+  properties: {
+    firstName: { type: 'string',example: 'Alice', },
+  
+    lastName: {
+      type: 'string',
+      example: 'Smith',
+    },
+    email: {
+      type: 'string',
+      example: 'alice@example.com',
+    },
+    password: {
+      type: 'string',
+      example: 'SecurePass123',
+    },
+    gender: {
+      type: 'string',
+      enum: ['Male', 'Female', 'Other'],
+      example: 'Female',
+    },
+    district: {
+      type: 'string',
+      example: 'Gasabo',
+    },
+    schoolId: {
+      type: 'string',
+      format: 'uuid',
+      example: '550e8400-e29b-41d4-a716-446655440000',
+    },
+  },
+},
+CreateAdmissionManagerResponse: {
+  type: 'object',
+  properties: {
+    success: {
+      type: 'boolean',
+      example: true,
+    },
+    message: {
+      type: 'string',
+      example: 'Admission Manager created successfully',
+    },
+    data: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string',
+          format: 'uuid',
+          example: 'ca93e40c-30a2-4b0b-9ec9-b0301478a0d6',
+        },
+        firstName: {
+          type: 'string',
+          example: 'Alice',
+        },
+        lastName: {
+          type: 'string',
+          example: 'Smith',
+        },
+        email: {
+          type: 'string',
+          format: 'email',
+          example: 'alice@example.com',
+        },
+        gender: {
+          type: 'string',
+          enum: ['Male', 'Female', 'Other'],
+          example: 'Female',
+        },
+        district: {
+          type: 'string',
+          example: 'Gasabo',
+        },
+        schoolId: {
+          type: 'string',
+          format: 'uuid',
+          example: '550e8400-e29b-41d4-a716-446655440000',
+        },
+        roleName: {
+          type: 'string',
+          example: 'AdmissionManager',
+        },
+        createdAt: {
+          type: 'string',
+          format: 'date-time',
+          example: '2025-09-13T14:14:49.425Z',
+        },
+        updatedAt: {
+          type: 'string',
+          format: 'date-time',
+          example: '2025-09-13T14:14:49.425Z',
+        },
       },
     },
   },
-  apis: ['./src/routes/*.ts'], // path to your route files
+},
+
+
+  UpdateSchoolProfileSchema: {
+    type: 'object',
+    properties: {
+      description: { type: 'string', example: 'A great school for all students' },
+      mission: { type: 'string', example: 'Provide quality education' },
+      vision: { type: 'string', example: 'Excellence in education' },
+      foundedYear: { type: 'integer', minimum: 1800, maximum: new Date().getFullYear(), example: 2005 },
+      accreditation: { type: 'string', example: 'REB' },
+      languagesOffered: { type: 'array', items: { type: 'string' }, example: ['English', 'French'] },
+      extracurriculars: { type: 'array', items: { type: 'string' }, example: ['Football', 'Debate'] },
+      profilePhoto: { type: 'string', format: 'binary', example: 'https://res.cloudinary.com/.../profile.jpg' },
+    },
+  },
+
+  UpdateSchoolInfoSchema : {
+  type: 'object',
+  properties: {
+    schoolName: { type: 'string', example: 'Inzozi International School' },
+    schoolCode: { type: 'string', example: 'INS123' },
+    schoolCategory: { 
+      type: 'string', 
+      enum: ['REB', 'RTB'], 
+      example: 'REB', 
+      nullable: true 
+    },
+    schoolLevel: { 
+      type: 'string', 
+      enum: ['Nursery', 'Primary', 'O-Level', 'A-Level'], 
+      example: 'Primary', 
+      nullable: true 
+    },
+    schoolType: { 
+      type: 'string', 
+      enum: ['Girls', 'Boys', 'Mixed'], 
+      example: 'Mixed', 
+      nullable: true 
+    },
+    province: { type: 'string', example: 'Kigali', nullable: true },
+    district: { type: 'string', example: 'Gasabo' },
+    sector: { type: 'string', example: 'Kacyiru', nullable: true },
+    cell: { type: 'string', example: 'Kacyiru Cell', nullable: true },
+    village: { type: 'string', example: 'Village 1', nullable: true },
+    email: { type: 'string', format: 'email', example: 'info@inzozischool.com' },
+    telephone: { type: 'string', example: '+250788123456', nullable: true },
+    licenseDocument: { type: 'string', example: 'https://res.cloudinary.com/.../license.pdf', nullable: true },
+  },
+  required: [], // all fields optional for update
+},
+
+
+
+  CreateSchoolSpotSchema: {
+    type: 'object',
+    required: ['level', 'studentType', 'academicYear', 'yearofstudy', 'totalSpots'],
+    properties: {
+      level: { type: 'string', enum: ['Nursery', 'Primary', 'O-level', 'A-level'], example: 'O-level' },
+      studentType: { type: 'string', enum: ['newcomer', 'transfer'], example: 'newcomer' },
+      academicYear: { type: 'string', example: '2025/2026' },
+      yearofstudy: { type: 'string', example: 'Year 3' },
+      totalSpots: { type: 'integer', minimum: 0, example: 50 },
+      occupiedSpots: { type: 'integer', minimum: 0, example: 10 },
+      registrationOpen: { type: 'boolean', example: true },
+      waitingListCount: { type: 'integer', minimum: 0, example: 5 },
+      combination: { type: 'array', items: { type: 'string' }, example: ['Math', 'Physics'] },
+      admissionConditions: {
+        type: 'object',
+        properties: {
+          minGrade: { type: 'string', example: 'B' },
+          requiredSubjects: { type: 'array', items: { type: 'string' }, example: ['English', 'Math'] },
+          examScore: { type: 'string', example: '75%' },
+          interviewRequired: { type: 'boolean', example: true },
+          documents: { type: 'array', items: { type: 'string' }, example: ['Birth Certificate', 'ID'] },
+          notes: { type: 'string', example: 'Priority for siblings of current students' },
+        },
+      },
+    },
+  },
+
+  CreateSchoolGallerySchema: {
+    type: 'object',
+    required: ['category'],
+    properties: {
+      category: { 
+        type: 'string', 
+        enum: ['classroom', 'computerLab', 'library', 'sports', 'dining', 'dormitory', 'administration', 'playground'], 
+        example: 'classroom' 
+      },
+      imageUrl:{ type: 'string', format: 'binary', example: 'https://res.cloudinary.com/.../imageUrl.jpg' },
+      caption: { type: 'string', example: 'Our new science lab' },
+      isFeatured: { type: 'boolean', example: true },
+      order: { type: 'integer', minimum: 0, example: 1 },
+    },
+  },
+        
+      },
+    },
+  },
+  apis: ['./src/routes/*.ts'], 
 };
 
 const swaggerSpec = swaggerJSDoc(options);

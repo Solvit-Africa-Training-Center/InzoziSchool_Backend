@@ -1,12 +1,13 @@
 import { School } from '../database/models/School';
 import { User } from '../database/models/User';
-import { ISchoolRegister,IUpdateSchoolProfile,ICreateSchoolGallery,ICreateSchoolSpot,IUpdateSchoolSpot } from '../types/School';
+import { ISchoolRegister,IUpdateSchoolProfile,ICreateSchoolGallery,ICreateSchoolSpot,IUpdateSchoolSpot ,SearchFilters} from '../types/School';
 import { sequelize } from '../database';
 import { SchoolAttributes } from '../database/models/School';
 import { emailEmitter } from '../events/emailEvent';
 import { SchoolProfile } from '../database/models/SchoolProfile';
 import { SchoolGallery } from '../database/models/SchoolGallery';
 import { SchoolSpot } from '../database/models/SchoolSpot';
+import { Op } from 'sequelize';
 
 
 export const registerSchool = async (userId: string, data: ISchoolRegister) => {
@@ -203,8 +204,17 @@ export const updateSchoolProfile = async (schoolId: string, data: IUpdateSchoolP
 
   return profile;
 };
-export const getSchoolProfile = async (schoolId: string) => {
-  return SchoolProfile.findOne({ where: { schoolId } });
+export const getSchoolProfile = async (schoolId: string ,limit:number,offset:number,page:number) => {
+  const {rows,count} = await SchoolProfile.findAndCountAll({ where: { schoolId }, limit, offset,order: [['createdAt', 'DESC']] });
+
+  return {
+    profiles: rows,
+    total: count,
+    page,
+    limit,
+    totalPages: Math.ceil(count / limit),
+  };
+  
 };
 
 export const createSchoolSpot = async (
@@ -228,7 +238,7 @@ export const createSchoolSpot = async (
           occupiedSpots,
           registrationOpen,
           availableSpots,
-          combination: [combo], // only this combination
+          combination: [combo], 
         };
         return SchoolSpot.create(spotData);
       })
@@ -253,23 +263,56 @@ export const updateSchoolSpot = async (schoolId: string, spotId: string, data: I
   return spot.update(data);
 };
 
-export const listSchoolSpots = async (schoolId: string) => {
-  return SchoolSpot.findAll({ where: { schoolId }, order: [['createdAt', 'DESC']] });
+export const listSchoolSpots = async (schoolId: string,limit:number,offset:number,page:number) => {
+  const {rows,count} = await SchoolSpot.findAndCountAll({ where: { schoolId }, limit, offset,order: [['createdAt', 'DESC']] });
+    return {
+    spots: rows,
+    total: count,
+    page,
+    limit,
+    totalPages: Math.ceil(count / limit),
+  };
+  
 };
+
+export const deleteSchoolSpot = async (schoolId: string, spotId: string,userId:string) => {
+  const spot = await SchoolSpot.findOne({ where: { id: spotId, schoolId } });
+  if (!spot) throw new Error('School spot not found');
+  await spot.destroy();
+  return true;
+};
+
 
 
 export const addGalleryImage = async (schoolId: string, data: ICreateSchoolGallery,userId:string) => {
   return SchoolGallery.create({ ...data, schoolId });
 };
 
-export const listGalleryImages = async (schoolId: string) => {
-  return SchoolGallery.findAll({ where: { schoolId }, order: [['order', 'ASC'], ['createdAt', 'DESC']] });
+export const listGalleryImages = async (schoolId: string,limit:number,offset:number,page:number) => {
+
+  const {rows,count} = await SchoolGallery.findAndCountAll({ where: { schoolId }, limit, offset, order: [['order', 'ASC'], ['createdAt', 'DESC']] });
+    return {
+    images: rows,
+    total: count,
+    page,
+    limit,
+    totalPages: Math.ceil(count / limit),
+  };
+  //
+  
 };
 
 export const updateGalleryImage = async (schoolId: string, imageId: string, data: Partial<ICreateSchoolGallery>,userId:string) => {
   const image = await SchoolGallery.findOne({ where: { id: imageId, schoolId } });
   if (!image) throw new Error('Gallery image not found');
   return image.update(data);
+};
+ 
+export const deleteGalleryImage = async (schoolId: string, imageId: string,userId:string) => {
+  const image = await SchoolGallery.findOne({ where: { id: imageId, schoolId } });
+  if (!image) throw new Error('Gallery image not found');
+  await image.destroy();
+  return true;
 };
 
 
@@ -279,7 +322,7 @@ export const updateSchoolInfo = async (schoolId: string, data: SchoolAttributes,
 
   const allowedFields: (keyof SchoolAttributes)[] = [
     'province', 'district', 'sector', 'cell', 'village',
-    'schoolType', 'schoolCategory', 'schoolLevel', 'licenseDocument'
+    'schoolType', 'schoolCategory', 'schoolLevel', 'licenseDocument','telephone','email','schoolName'
   ];
 
   allowedFields.forEach((field) => {
@@ -290,4 +333,73 @@ export const updateSchoolInfo = async (schoolId: string, data: SchoolAttributes,
 
   await school.save();
   return school;
+  
+};
+
+export const deleteSchool = async (schoolId: string) => {
+  const school = await School.findByPk(schoolId);
+  if (!school) throw new Error('School not found'); 
+  await school.destroy();
+  return true;
+};
+
+export const searchSchools = async (
+  limit: number,
+  offset: number,
+  page: number,
+  filters: SearchFilters
+) => {
+  const { district, schoolType, schoolLevel, schoolCategory, yearOfStudy, combination, academicYear, minAvailableSpots } = filters;
+
+  const schoolWhere: any = { status: 'approved' };
+  if (district) schoolWhere.district = district;
+  if (schoolType) schoolWhere.schoolType = schoolType;
+  if (schoolLevel) schoolWhere.schoolLevel = schoolLevel;
+  if (schoolCategory) schoolWhere.schoolCategory = schoolCategory;
+
+  const spotWhere: any = {};
+  if (yearOfStudy) spotWhere.yearOfStudy = yearOfStudy;
+  if (academicYear) spotWhere.academicYear = academicYear;
+  if (combination) spotWhere.combination = { [Op.contains]: [combination] };
+
+  const { rows, count } = await School.findAndCountAll({
+    where: schoolWhere,
+    include: [
+      {
+        model: SchoolSpot,
+        as: 'spots',
+        where: spotWhere,
+        required: Object.keys(spotWhere).length > 0,
+      },
+    ],
+    limit,
+    offset,
+    distinct: true,
+    order: [['createdAt', 'DESC']],
+  });
+
+  
+  const filteredSchools = rows
+  .map((school) => {
+    
+    const spots = (school as any).spots.filter((spot: any) => {
+      const availableSpots = spot.totalSpots - spot.occupiedSpots;
+      return minAvailableSpots ? availableSpots >= minAvailableSpots : true;
+    });
+
+    return {
+      ...school.get({ plain: true }),
+      spots,
+    };
+  })
+  .filter((school) => school.spots.length > 0);
+
+
+  return {
+    schools: filteredSchools,
+    total: filteredSchools.length,
+    page,
+    limit,
+    totalPages: Math.ceil(filteredSchools.length / limit),
+  };
 };

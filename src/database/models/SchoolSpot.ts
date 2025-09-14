@@ -104,7 +104,7 @@ export const SchoolSpotModel = (sequelize: Sequelize) => {
         { fields: ['level'] },
         {
           unique: true,
-          fields: ['schoolId', 'academicYear', 'level', 'studentType'],
+          fields: ['schoolId', 'academicYear', 'level', 'studentType', 'combination', 'yearofstudy'],
           name: 'unique_school_spot_per_category',
         },
       ],
