@@ -32,9 +32,9 @@ export interface IUpdateSchoolProfile {
   mission?: string;
   vision?: string;
   foundedYear?: number;
-  accreditation?: string;
-  languagesOffered?: string[];
-  extracurriculars?: string[];
+  //accreditation?: string;
+  //languagesOffered?: string[];
+  //extracurriculars?: string[];
   profilePhoto?: string | null;
 }
 

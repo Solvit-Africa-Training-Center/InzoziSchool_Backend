@@ -25,9 +25,9 @@ export const UpdateSchoolProfileSchema = Joi.object({
   mission: Joi.string().optional(),
   vision: Joi.string().optional(),
   foundedYear: Joi.number().min(1800).max(new Date().getFullYear()).optional(),
-  accreditation: Joi.string().optional(),
-  languagesOffered: Joi.array().items(Joi.string()).optional(),
-  extracurriculars: Joi.array().items(Joi.string()).optional(),
+  //accreditation: Joi.string().optional(),
+  //languagesOffered: Joi.array().items(Joi.string()).optional(),
+  //extracurriculars: Joi.array().items(Joi.string()).optional(),
   profilePhoto: Joi.string().optional(),
 });
 
