@@ -270,7 +270,12 @@ export const addGallery = async (req: IRequestUser, res: Response) => {
 export const listGallery = async (req: IRequestUser, res: Response) => {
   try {
     const { schoolId } = req.params;
-    const {page,limit,offset}=getPagination( parseInt(req.query.page as string)|| 1, parseInt(req.query.limit as string) || 10);
+    const { page, limit, offset } = getPagination(
+      parseInt(req.query.page as string) || 1,
+      parseInt(req.query.limit as string) || 10
+    );
+
+    const category = req.query.category as string | undefined; 
 
     if (!schoolId) {
       return ResponseService({
@@ -282,9 +287,9 @@ export const listGallery = async (req: IRequestUser, res: Response) => {
       });
     }
 
-    const images = await SchoolService.listGalleryImages(schoolId,limit,offset,page);
-
-    return ResponseService({
+    const images = await SchoolService.listGalleryImages(schoolId,limit, offset, page,category );
+      
+       return ResponseService({
       data: images,
       status: 200,
       success: true,
@@ -301,6 +306,7 @@ export const listGallery = async (req: IRequestUser, res: Response) => {
     });
   }
 };
+
 export const updateGallery = async (req: IRequestUser, res: Response) => {
   try {
     const { schoolId, id: imageId } = req.params;

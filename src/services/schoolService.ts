@@ -288,19 +288,34 @@ export const addGalleryImage = async (schoolId: string, data: ICreateSchoolGalle
   return SchoolGallery.create({ ...data, schoolId });
 };
 
-export const listGalleryImages = async (schoolId: string,limit:number,offset:number,page:number) => {
 
-  const {rows,count} = await SchoolGallery.findAndCountAll({ where: { schoolId }, limit, offset, order: [['order', 'ASC'], ['createdAt', 'DESC']] });
-    return {
+export const listGalleryImages = async (schoolId: string,limit:number,offset:number,page:number,category?:string) => {
+
+  const where: any = { schoolId };
+
+  if (category) {
+    where.category = category; 
+  }
+
+  const { rows, count } = await SchoolGallery.findAndCountAll({
+    where,
+    limit,
+    offset,
+    order: [
+      ['order', 'ASC'],
+      ['createdAt', 'DESC'],
+    ],
+  });
+
+  return {
     images: rows,
     total: count,
     page,
     limit,
     totalPages: Math.ceil(count / limit),
   };
-  //
-  
 };
+
 
 export const updateGalleryImage = async (schoolId: string, imageId: string, data: Partial<ICreateSchoolGallery>,userId:string) => {
   const image = await SchoolGallery.findOne({ where: { id: imageId, schoolId } });

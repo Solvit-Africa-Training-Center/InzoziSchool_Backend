@@ -619,11 +619,38 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
+ *         description: The ID of the school
+ *       - name: category
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: string
+ *           enum: [classroom, computerLab, library, sports, dining, dormitory, administration, playground]
+ *         description: Filter gallery by category
+ *       - name: page
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Page number for pagination
+ *       - name: limit
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of items per page
  *     responses:
  *       200:
  *         description: List of gallery items
  */
-router.get('/schools/:schoolId/gallery', authMiddleware, SchoolEntitiesController.listGallery);
+router.get(
+  '/schools/:schoolId/gallery',
+  authMiddleware,
+  SchoolEntitiesController.listGallery
+);
+
 
 /**
  * @swagger
