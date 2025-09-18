@@ -3,7 +3,7 @@ import { Role } from "../database/models/Roles";
 import { School } from "../database/models/School";
 import { hashPassword } from "../utils/helper";
 import { CreateSchoolManagerDto, CreateAdmissionManagerDto } from "../types/userInterface";
-
+import { emailEmitter } from "../events/emailEvent";
 export class UserService {
 
   
@@ -21,35 +21,43 @@ export class UserService {
 
     return user;
   }
-static async createAdmissionManager(
+  static async createAdmissionManager(
   schoolId: string,
   data: CreateAdmissionManagerDto,
   currentUser: { id?: string; role?: string; schoolId?: string }
 ): Promise<User> {
-  
-  if (currentUser.role !== 'SchoolManager') {
-    throw new Error('Only School Managers can create an Admission Manager');
+  if (currentUser.role !== "SchoolManager") {
+    throw new Error("Only School Managers can create an Admission Manager");
   }
 
   if (currentUser.schoolId !== schoolId) {
-    throw new Error('You are not authorized to create Admission Managers for this school');
+    throw new Error("You are not authorized to create Admission Managers for this school");
   }
 
-  const role = await Role.findOne({ where: { name: 'AdmissionManager' } });
-  if (!role) throw new Error('AdmissionManager role not found');  
+  const role = await Role.findOne({ where: { name: "AdmissionManager" } });
+  if (!role) throw new Error("AdmissionManager role not found");
 
-  const hashedPassword = await hashPassword(data.password);
+  const plainPassword = data.password; 
+  const hashedPassword = await hashPassword(plainPassword);
+
   const user = await User.create({
     ...data,
     password: hashedPassword,
     roleId: role.id,
-    schoolId,            
-    
+    schoolId,
+  });
+
+  const school = await School.findByPk(schoolId);
+
+   emailEmitter.emit("admissionManagerCreated", {
+    email: user.email,
+    name: user.firstName || "Admission Manager",
+    password: plainPassword,
+    schoolName: school?.schoolName || "your school",
   });
 
   return user;
 }
-
 
   
   static async getAllUsers(requestingUser: any) {

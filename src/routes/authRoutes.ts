@@ -56,14 +56,38 @@ router.post("/auth/logout", authMiddleware, AuthController.logout);
  *             $ref: '#/components/schemas/ForgotPasswordRequest'
  *     responses:
  *       200:
- *         description: Reset code sent
+ *         description: Reset code sent successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ForgotPasswordResponse'
+ *       400:
+ *         description: Invalid email or user not found
  */
 router.post("/auth/forgot-password", PasswordResetController.forgotPassword);
-
+/**
+ * @swagger
+ * /api/auth/verify-otp:
+ *   post:
+ *     summary: Verify the OTP code sent to email
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/VerifyOtpRequest'
+ *     responses:
+ *       200:
+ *         description: OTP verified successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/VerifyOtpResponse'
+ *       400:
+ *         description: Invalid or expired OTP
+ */
+router.post("/auth/verify-otp", PasswordResetController.verifyOtp);
 /**
  * @swagger
  * /api/auth/reset-password:
@@ -78,11 +102,13 @@ router.post("/auth/forgot-password", PasswordResetController.forgotPassword);
  *             $ref: '#/components/schemas/ResetPasswordRequest'
  *     responses:
  *       200:
- *         description: Password updated successfully
+ *         description: Password reset successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ResetPasswordResponse'
+ *       400:
+ *         description: Invalid OTP or expired session
  */
 router.post("/auth/reset-password", PasswordResetController.resetPassword);
 

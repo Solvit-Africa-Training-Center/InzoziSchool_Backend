@@ -11,6 +11,11 @@ import { Op } from 'sequelize';
 
 
 export const registerSchool = async (userId: string, data: ISchoolRegister) => {
+
+  const existingCode= await School.findOne({where:{schoolCode:data.schoolCode}});
+  if(existingCode) throw new Error('School code already exists');
+  const existingEmail= await School.findOne({where:{email:data.email}});
+  if(existingEmail) throw new Error('School email already exists');
   return School.create({
     ...data,
     userId, 
@@ -18,6 +23,7 @@ export const registerSchool = async (userId: string, data: ISchoolRegister) => {
   });
   
 };
+
 
 export const approveSchool = async (schoolId: string, adminId: string) => {
   return sequelize.transaction(async (t) => {

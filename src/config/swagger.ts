@@ -58,37 +58,45 @@ const options = {
           },
         },
         ForgotPasswordRequest: {
-          type: 'object',
-          required: ['email'],
-          properties: {
-            email: { type: 'string', example: 'user@example.com' },
-          },
-        },
-        ForgotPasswordResponse: {
-          type: 'object',
-          properties: {
-            data: { type: 'null' },
-            message: { type: 'string', example: 'Reset code sent' },
-            success: { type: 'boolean', example: true },
-          },
-        },
-        ResetPasswordRequest: {
-          type: 'object',
-          required: ['email', 'code', 'newPassword'],
-          properties: {
-            email: { type: 'string', example: 'user@example.com' },
-            code: { type: 'string', example: '123456' },
-            newPassword: { type: 'string', example: 'NewPass123!' },
-          },
-        },
-        ResetPasswordResponse: {
-          type: 'object',
-          properties: {
-            data: { type: 'string', example: 'NewPass123!' },
-            message: { type: 'string', example: 'Password updated' },
-            success: { type: 'boolean', example: true },
-          },
-        },
+  type: 'object',
+  required: ['email'],
+  properties: {
+    email: { type: 'string', example: 'user@example.com' },
+  },
+},
+ForgotPasswordResponse: {
+  type: 'object',
+  properties: {
+    data: { type: 'null', example: null },
+    message: { type: 'string', example: 'A reset code has been sent to your email' },
+    success: { type: 'boolean', example: true },
+  },
+},
+
+VerifyOtpRequest: { type: 'object', required: ['otp'], properties: { otp: { type: 'string', example: '123456' } } },
+VerifyOtpResponse: {
+  type: 'object',
+  properties: {
+    data: { 
+      type: 'object', 
+      properties: { email: { type: 'string', example: 'user@example.com' } } 
+    },
+    message: { type: 'string', example: 'OTP verified successfully. You may now reset your password' },
+    success: { type: 'boolean', example: true },
+  },
+},
+
+
+ResetPasswordRequest: { type: 'object', required: ['newPassword'], properties: { newPassword: { type: 'string', example: 'MyNewStrongPassword123!' } } },
+ResetPasswordResponse: {
+  type: 'object',
+  properties: {
+    data: { type: 'null', example: null },
+    message: { type: 'string', example: 'Password reset successfully' },
+    success: { type: 'boolean', example: true },
+  },
+},
+
         CreateSchoolManagerRequest: {
           type: 'object',
           required: ['firstName', 'lastName', 'email', 'password', 'gender', 'district'],

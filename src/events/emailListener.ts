@@ -1,6 +1,7 @@
-// src/events/emailListener.ts
+
 import { emailEmitter } from "./emailEvent";
 import { sendEmail } from "../utils/mailer";
+import { name } from "ejs";
 
 emailEmitter.on("sendResetCode", async (email: string, code: string) => {
   try {
@@ -44,7 +45,7 @@ emailEmitter.on(
       await sendEmail(
         manager.email,
         "Your school registration has been rejected",
-        "schoolRejection", // schoolRejection.ejs
+        "schoolRejection", 
         {
           managerName: manager.firstName,
           schoolName: school.schoolName,
@@ -57,6 +58,25 @@ emailEmitter.on(
       console.error("Error sending school rejection email:", err);
     }
   }
+);
+emailEmitter.on("admissionManagerCreated", async(payload:{email:string,firstName:string,password:string,schoolName:string})=>{
+  try{
+    await sendEmail(
+      payload.email,
+      "Your Admission Manager Account Details",
+      "admissionManagerCreated",
+      {
+        name:payload.firstName,
+        schoolName:payload.schoolName,
+        password:payload.password,
+        email:payload.email
+      }
+    )
+    console.log(`Admission Manager account email sent to ${payload.email}`);
+  } catch(err){
+    console.error("Error sending Admission Manager account email:", err);
+  }   
+}
 );
 
 

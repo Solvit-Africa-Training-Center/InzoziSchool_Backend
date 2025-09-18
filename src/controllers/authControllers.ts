@@ -31,29 +31,39 @@ export class AuthController {
 
 
 export class PasswordResetController {
-   static async forgotPassword(req: Request, res: Response) {
+  static async forgotPassword(req: Request, res: Response) {
     const { email } = req.body;
-    if (!email) return ResponseService({ data: null, success: false, status: 400, message: "Email required", res });
+    if (!email) return ResponseService({ res, success: false, status: 400, message: "Email required", data: null });
 
     try {
       await PasswordResetService.requestReset(email);
-      return ResponseService({ data: null, success: true, status: 200, message: "Your reset password code has sent to your email", res });
+      return ResponseService({ res, success: true, status: 200, message: "OTP sent to your email", data: null });
     } catch (e: any) {
-      return ResponseService({ data: null, success: false, status: 400, message: e.message, res });
+      return ResponseService({ res, success: false, status: 400, message: e.message, data: null });
     }
   }
-  static async resetPassword(req: Request, res: Response) {
-    const { email, code, newPassword } = req.body;
-    if (!email || !code || !newPassword) {
-      return ResponseService({ data: null, success: false, status: 400, message: "Email, code and password required", res });
-    }
+
+  static async verifyOtp(req: Request, res: Response) {
+    const { otp } = req.body;
+    if (!otp) return ResponseService({ res, success: false, status: 400, message: "OTP required", data: null });
 
     try {
-      await PasswordResetService.resetPassword(email, code, newPassword);
-      
-      return ResponseService({ data:null, success: true, status: 200, message: "Password updated Successful", res });
+      await PasswordResetService.verifyOtp(otp);
+      return ResponseService({ res, success: true, status: 200, message: "OTP verified successfully. You may now reset your password", data: null });
     } catch (e: any) {
-      return ResponseService({ data: null, success: false, status: 400, message: e.message, res });
+      return ResponseService({ res, success: false, status: 400, message: e.message, data: null });
+    }
+  }
+
+  static async resetPassword(req: Request, res: Response) {
+    const { newPassword } = req.body;
+    if (!newPassword) return ResponseService({ res, success: false, status: 400, message: "New password required", data: null });
+
+    try {
+      await PasswordResetService.resetPassword(newPassword);
+      return ResponseService({ res, success: true, status: 200, message: "Password reset successfully", data: null });
+    } catch (e: any) {
+      return ResponseService({ res, success: false, status: 400, message: e.message, data: null });
     }
   }
 }

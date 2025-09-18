@@ -102,35 +102,46 @@ export class AuthService {
 }
 
 
-
-
 export class PasswordResetService {
   static generateCode(): string {
-    return Math.floor(100000 + Math.random() * 900000).toString(); // 6 digits
+    return Math.floor(100000 + Math.random() * 900000).toString();
   }
 
-    static async requestReset(email: string): Promise<void> {
+  static async requestReset(email: string) {
     const user = await User.findOne({ where: { email } });
     if (!user) throw new Error("User not found");
 
-    const code = this.generateCode();
-    await redis.setEx(`resetCode:${email}`, 300, code); 
+    const otp = this.generateCode();
+    await redis.setEx(`resetCode:${otp}`, 300, email); 
+
+    emailEmitter.emit("sendResetCode", email, otp);
+  }
+
+  static async verifyOtp(otp: string) {
+    const email = await redis.get(`resetCode:${otp}`);
+    if (!email) throw new Error("Invalid or expired OTP");
+
+    await redis.setEx(`resetSession:${email}`, 600, email); 
+    await redis.del(`resetCode:${otp}`);
+  }
+
+ static async resetPassword(newPassword: string): Promise<void> {
+    
+    const keys: string[] = await redis.keys("resetSession:*");
+    if (keys.length === 0) throw new Error("No active reset session");
 
     
-    emailEmitter.emit("sendResetCode", email, code);
-  }
-  static async resetPassword(email: string, code: string, newPassword: string) {
-    const storedCode = await redis.get(`resetCode:${email}`);
-    if (!storedCode || storedCode !== code) throw new Error("Invalid or expired code");
+    const sessionKey = keys[0];
+    if (!sessionKey) throw new Error("No active reset session (unexpected)");
+
+    const email = await redis.get(sessionKey);
+    if (!email) throw new Error("Reset session expired or invalid");
 
     const user = await User.findOne({ where: { email } });
     if (!user) throw new Error("User not found");
-
     user.password = await hashPassword(newPassword);
     await user.save();
 
-    await redis.del(`resetCode:${email}`); 
-    return true;
+    await redis.del(sessionKey);
   }
 }
-
