@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - 20-alpine
+
+services: []
+
+before_script:
+  - docker-compose up -d postgres redis
+  - sleep 10  # Wait for DB/Redis to start
+  - docker exec postgres psql -c "CREATE DATABASE inzozi_db;" -U postgres
+
+script:
+  - docker-compose up -d backend
+  - sleep 5
+  - npm test
+
+after_success:
+  - npm run coverage
+  - npx coveralls < coverage/lcov.info
+

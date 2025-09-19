@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${DEV_DATABASE}
+      POSTGRES_USER: ${DEV_USERNAME}
+      POSTGRES_PASSWORD: ${DEV_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data   # ✅ Named volume (correct)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DEV_USERNAME} -d ${DEV_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  backend:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DEV_HOST: postgres
+      REDIS_HOST: redis
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/logs
+    command: sh scripts/start.sh
+    restart: unless-stopped
+
+# Named volumes (must be defined here)
+volumes:
+  pgdata:
+  redisdata:
