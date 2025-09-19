@@ -8,7 +8,6 @@ module.exports = {
     const passwordSchoolManager = await bcrypt.hash('school123', 10);
     const passwordAdmissionManager = await bcrypt.hash('admission123', 10);
 
-    // Fetch role IDs from roles table
     const [roles] = await queryInterface.sequelize.query(
       'SELECT id, name FROM roles;'
     );
