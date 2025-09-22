@@ -352,7 +352,7 @@ router.patch(
  *             schema:
  *               $ref: '#/components/schemas/UpdateSchoolProfileSchema'
  */
-router.get('/:schoolId/profile', authMiddleware, SchoolEntitiesController.getProfile);
+router.get('/schools/:schoolId/profile', authMiddleware, SchoolEntitiesController.getProfile);
 
 /**
  * @swagger

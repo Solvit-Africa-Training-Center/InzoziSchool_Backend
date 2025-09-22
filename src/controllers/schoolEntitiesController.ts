@@ -17,7 +17,7 @@ const getUserId = (req: IRequestUser): string => {
 export const updateProfile = async (req: IRequestUser, res: Response) => {
   try {
     const { schoolId } = req.params;
-    const updatedProfile = req.body; // directly take body
+    const updatedProfile = req.body; 
 
     if (!schoolId) {
       return ResponseService({
@@ -40,7 +40,7 @@ export const updateProfile = async (req: IRequestUser, res: Response) => {
 
     const profilePhoto = await uploadToCloud(req.file);
 
-    const profile = await SchoolService.updateSchoolProfile(schoolId, {...updateProfile,profilePhoto},getUserId(req));
+    const profile = await SchoolService.updateSchoolProfile(schoolId, {...updatedProfile,profilePhoto},getUserId(req));
 
     return ResponseService({
       data: profile,
