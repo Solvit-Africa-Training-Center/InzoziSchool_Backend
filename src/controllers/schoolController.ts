@@ -179,7 +179,7 @@ export const listPendingSchools = async (req: IRequestUser, res: Response) => {
 /**
  * List approved schools (Admin)
  */
-export const listApprovedSchools = async (req: IRequestUser, res: Response) => {
+export const listApprovedSchools = async (req: Request, res: Response) => {
   try {
 
      const { page, limit, offset } = getPagination(

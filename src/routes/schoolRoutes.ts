@@ -169,7 +169,7 @@ router.get(
  *     summary: List approved schools
  *     tags: [Schools]
  *     security:
- *       - bearerAuth: []
+ *      
  *     responses:
  *       200:
  *         description: List of approved schools
@@ -182,8 +182,8 @@ router.get(
  */
 router.get(
   '/schools/approved',
-  authMiddleware,
-  checkRole(['Admin']),
+  
+  
   SchoolController.listApprovedSchools
 );
 
