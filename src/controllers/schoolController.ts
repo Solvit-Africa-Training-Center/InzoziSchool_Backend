@@ -287,7 +287,7 @@ export const getSchoolDetails = async (req: IRequestUser, res: Response) => {
 
 };
 
-export const listSchools = async (req: IRequestUser, res: Response) => {
+export const listSchools = async (req: Request, res: Response) => {
   try {
     const { page, limit, offset } = getPagination(
       parseInt(req.query.page as string) || 1,

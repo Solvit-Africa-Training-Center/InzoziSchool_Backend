@@ -113,8 +113,7 @@ router.patch(
  *   get:
  *     summary: List all schools, optionally filtered by status
  *     tags: [Schools]
- *     security:
- *       - bearerAuth: []
+
  *     parameters:
  *       - name: status
  *         in: query
@@ -134,8 +133,7 @@ router.patch(
  */
 router.get(
   '/schools',
-  authMiddleware,
-  checkRole(['Admin']),
+  
   SchoolController.listSchools
 );
 
