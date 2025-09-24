@@ -396,7 +396,7 @@ export const SchoolSearch = async (req: Request, res: Response): Promise<Respons
       parseInt(limitQuery as string) || 10
     );
 
-    // Build filters object
+    
     const filters: SearchFilters = {
       district: queryFilters.district ? String(queryFilters.district) : undefined,
       schoolType: queryFilters.schoolType ? String(queryFilters.schoolType) : undefined,

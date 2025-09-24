@@ -36,7 +36,7 @@ const studentFileFields = upload.fields([
  *               $ref: '#/components/schemas/StudentResponseSchema'
  */
 
-router.post('/apply', studentFileFields, submitStudentApplication);
+router.post('/students/apply', studentFileFields, submitStudentApplication);
 /**
  * @swagger
  * /api/students/applications/pending:
@@ -54,7 +54,7 @@ router.post('/apply', studentFileFields, submitStudentApplication);
  *               $ref: '#/components/schemas/PendingApplicationsResponseSchema'
  */
 
-router.get('/applications/pending', authMiddleware,checkRole(['SchoolManager']), fetchPendingApplications);
+router.get('/students/applications/pending', authMiddleware,checkRole(['SchoolManager']), fetchPendingApplications);
 
 /**
  * @swagger
@@ -86,7 +86,7 @@ router.get('/applications/pending', authMiddleware,checkRole(['SchoolManager']),
  *               $ref: '#/components/schemas/StudentResponseSchema'
  */
 router.put(
-  '/applications/approve',
+  '/students/:studentId/approve',
   authMiddleware,
   checkRole(['SchoolManager']),
   upload.single('babyeyiDocument'),
@@ -121,6 +121,6 @@ router.put(
  *             schema:
  *               $ref: '#/components/schemas/StudentResponseSchema'
  */
-router.put('/applications/reject', authMiddleware,checkRole(['SchoolManager']), handleRejectApplication);
+router.put('/students/:studentId/reject', authMiddleware,checkRole(['SchoolManager']), handleRejectApplication);
 
 export default router;
