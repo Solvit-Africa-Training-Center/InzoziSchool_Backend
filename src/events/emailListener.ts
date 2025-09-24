@@ -80,3 +80,50 @@ emailEmitter.on("admissionManagerCreated", async(payload:{email:string,firstName
 );
 
 
+emailEmitter.on('newApplication', async ({ parentEmail, studentName, schoolName }) => {
+  try {
+    await sendEmail(parentEmail, 'Application Received', 'newtApplication', {
+      studentName,
+      schoolName,
+    });
+  } catch (err) {
+    console.error('Error sending parent email:', err);
+  }
+});
+
+emailEmitter.on('notifyManager', async ({ managerEmail, studentName, schoolName }) => {
+  try {
+    await sendEmail(managerEmail, 'New Student Application', 'managerNotification', {
+      studentName,
+      schoolName,
+    });
+  } catch (err) {
+    console.error('Error sending manager email:', err);
+  }
+});
+emailEmitter.on('studentApplicationApproved', async ({ parentEmail, studentName, babyeyiUrl }) => {
+  try {
+    await sendEmail(
+      parentEmail,
+      'Your student application has been approved!',
+      'studentApproved', // ejs template
+      { studentName, babyeyiUrl }
+    );
+    console.log(`Approved email sent to ${parentEmail}`);
+  } catch (err) {
+    console.error('Error sending approved email:', err);
+  }
+});
+emailEmitter.on('studentApplicationRejected', async ({ parentEmail, studentName, reason }) => {
+  try {
+    await sendEmail(
+      parentEmail,
+      'Your student application has been rejected',
+      'studentRejected', 
+      { studentName, reason }
+    );
+    console.log(`Rejection email sent to ${parentEmail}`);
+  } catch (err) {
+    console.error('Error sending rejection email:', err);
+  }
+});

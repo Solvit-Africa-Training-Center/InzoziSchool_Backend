@@ -472,6 +472,145 @@ CreateAdmissionManagerResponse: {
     },
   },
 
+  CreateStudentSchema : {
+  type: 'object',
+  required: [
+    'firstName',
+    'lastName',
+    'gender',
+    'DOB',
+    'studentType',
+    'passportPhoto',
+    'fathersNames',
+    'mothersNames',
+    'representerEmail',
+    'representerPhone',
+    'nationality',
+    'province',
+    'district',
+    'sector',
+    'cell',
+    'village',
+  ],
+  properties: {
+    schoolId: { type: 'string', format: 'uuid', example: 'c1b7f2d0-1234-4c56-8ef0-123456abcdef' },
+    firstName: { type: 'string', example: 'John' },
+    middleName: { type: 'string', example: 'Doe' },
+    lastName: { type: 'string', example: 'Smith' },
+    gender: { type: 'string', enum: ['MALE', 'FEMALE', 'OTHER'], example: 'MALE' },
+    DOB: { type: 'string', format: 'date', example: '2018-05-21' },
+    studentType: { type: 'string', enum: ['newcomer', 'transfer'], example: 'newcomer' },
+    passportPhoto: { type: 'string', format: 'binary' },
+    fathersNames: { type: 'string', example: 'Peter Smith' },
+    mothersNames: { type: 'string', example: 'Mary Smith' },
+    representerEmail: { type: 'string', format: 'email', example: 'parent@example.com' },
+    representerPhone: { type: 'string', example: '+250788123456' },
+    nationality: { type: 'string', example: 'Rwandan' },
+    province: { type: 'string', example: 'Kigali' },
+    district: { type: 'string', example: 'Gasabo' },
+    sector: { type: 'string', example: 'Kacyiru' },
+    cell: { type: 'string', example: 'Nyarutarama' },
+    village: { type: 'string', example: 'Village 1' },
+    resultSlip: { type: 'string', format: 'binary' },
+    previousReport: { type: 'string', format: 'binary' },
+    mitationLetter: { type: 'string', format: 'binary' },
+  },
+},
+
+ CreateApplicationSchema : {
+  type: 'object',
+  required: ['studentId'],
+  properties: {
+    studentId: { type: 'string', format: 'uuid', example: 'c1b7f2d0-1234-4c56-8ef0-123456abcdef' },
+    status: { type: 'string', enum: ['pending', 'approved', 'rejected'], example: 'pending' },
+  },
+},
+
+ ApproveApplicationSchema :{
+  type: 'object',
+  required: ['babyeyiDocument'],
+  properties: {
+    babyeyiDocument: { type: 'string', format: 'binary', description: 'Document to send to parent after approval' },
+  },
+},
+
+RejectApplicationSchema : {
+  type: 'object',
+  required: ['rejectionReason'],
+  properties: {
+    rejectionReason: { type: 'string', example: 'Student does not meet minimum grade requirements' },
+  },
+},
+
+
+
+ StudentResponseSchema: {
+  type: 'object',
+  properties: {
+    id: { type: 'string', format: 'uuid' },
+    firstName: { type: 'string' },
+    lastName: { type: 'string' },
+    level: { type: 'string', enum: ['Nursery', 'Primary', 'O-level', 'A-level'] },
+    studentType: { type: 'string', enum: ['newcomer', 'transfer'] },
+    status: { type: 'string', enum: ['pending', 'approved', 'rejected'] },
+    schoolId: { type: 'string', format: 'uuid' },
+    babyeyiDocument: { type: 'string', nullable: true },
+  },
+},
+
+ApplicationResponseSchema : {
+  type: 'object',
+  properties: {
+    id: { type: 'string', format: 'uuid' },
+    studentId: { type: 'string', format: 'uuid' },
+    status: { type: 'string', enum: ['pending', 'approved', 'rejected'] },
+    createdAt: { type: 'string', format: 'date-time' },
+    updatedAt: { type: 'string', format: 'date-time' },
+  },
+},
+
+SearchSchoolsResponseSchema :{
+  type: 'object',
+  properties: {
+    schools: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', format: 'uuid' },
+          schoolName: { type: 'string' },
+          district: { type: 'string' },
+          schoolType: { type: 'string', enum: ['Girls', 'Boys', 'Mixed'] },
+          schoolLevel: { type: 'string', enum: ['Nursery', 'Primary', 'O-level', 'A-level'] },
+          email: { type: 'string', format: 'email' },
+          spots: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string', format: 'uuid' },
+                level: { type: 'string', enum: ['Nursery', 'Primary', 'O-level', 'A-level'] },
+                studentType: { type: 'string', enum: ['newcomer', 'transfer'] },
+                academicYear: { type: 'string' },
+                yearofstudy: { type: 'string' },
+                totalSpots: { type: 'integer' },
+                occupiedSpots: { type: 'integer' },
+                availableSpots: { type: 'integer' },
+                combination: { type: 'array', items: { type: 'string' } },
+              },
+            },
+          },
+        },
+      },
+    },
+    total: { type: 'integer' },
+    page: { type: 'integer' },
+    limit: { type: 'integer' },
+    totalPages: { type: 'integer' },
+  },
+},
+
+
   CreateSchoolGallerySchema: {
     type: 'object',
     required: ['category'],

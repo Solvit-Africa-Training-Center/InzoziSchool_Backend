@@ -728,7 +728,66 @@ router.delete(
   checkRole(['SchoolManager']),
   SchoolEntitiesController.deleteGallery
 );
-
+/**
+ * @swagger
+ * /api/schools/search:
+ *   get:
+ *     summary: Search schools with filters
+ *     tags: [Schools]
+ *     parameters:
+ *       - name: district
+ *         in: query
+ *         schema:
+ *           type: string
+ *       - name: schoolType
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [Girls, Boys, Mixed]
+ *       - name: schoolLevel
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [Nursery, Primary, O-level, A-level]
+ *       - name: schoolCategory
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [REB, RTB]
+ *       - name: yearOfStudy
+ *         in: query
+ *         schema:
+ *           type: string
+ *       - name: combination
+ *         in: query
+ *         schema:
+ *           type: string
+ *       - name: academicYear
+ *         in: query
+ *         schema:
+ *           type: string
+ *       - name: minAvailableSpots
+ *         in: query
+ *         schema:
+ *           type: integer
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *     responses:
+ *       200:
+ *         description: List of schools matching the filters
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SearchSchoolsResponseSchema'
+ */
 
 router.get('/schools/search',  SchoolController.SchoolSearch);
 
