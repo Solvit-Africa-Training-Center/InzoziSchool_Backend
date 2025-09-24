@@ -106,6 +106,20 @@ export const getSchools = async (
         as: 'ApprovedByAdmin',
         attributes: ['id', 'firstName', 'lastName', 'email'],
       },
+    
+       
+      {
+        model: SchoolProfile,
+        as: 'profile', 
+        attributes: [
+          'profilePhoto',
+          'mission',
+          'vision',
+          'description',
+          'foundedYear'
+          
+        ]
+      }
     ],
     limit,
     offset,
@@ -139,23 +153,41 @@ export const getPendingSchools = async (limit:number,offset:number) => {
 /**
  * Get only approved schools
  */
-export const getApprovedSchools = async (limit:number,offset:number,page:number) => {
-  const {rows,count}=await School.findAndCountAll({
-    where:{status:'approved'},
+export const getApprovedSchools = async (
+  limit: number,
+  offset: number,
+  page: number
+) => {
+  const { rows, count } = await School.findAndCountAll({
+    where: { status: 'approved' },
     limit,
     offset,
     order: [['createdAt', 'DESC']],
-
+    include: [
+      {
+        model: SchoolProfile,
+        as: 'profile', 
+        attributes: [
+          'profilePhoto',
+          'mission',
+          'vision',
+          'foundedYear'
+         
+        ]
+      }
+    ]
   });
-   return {
+
+  return {
     schools: rows,
     total: count,
     page,
     limit,
     totalPages: Math.ceil(count / limit),
   };
-  
 };
+
+
 
 /**
  * Get only rejected schools

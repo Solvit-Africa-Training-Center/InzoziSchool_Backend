@@ -726,12 +726,14 @@ router.delete(
   checkRole(['SchoolManager']),
   SchoolEntitiesController.deleteGallery
 );
+
 /**
  * @swagger
  * /api/schools/search:
  *   get:
  *     summary: Search schools with filters
  *     tags: [Schools]
+ *     security: []   # 👈 correctly indented here
  *     parameters:
  *       - name: district
  *         in: query
@@ -786,7 +788,7 @@ router.delete(
  *             schema:
  *               $ref: '#/components/schemas/SearchSchoolsResponseSchema'
  */
+router.get('/schools/search', SchoolController.SchoolSearch);
 
-router.get('/schools/search',  SchoolController.SchoolSearch);
 
 export default router;
