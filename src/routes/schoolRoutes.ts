@@ -335,7 +335,7 @@ router.patch(
  *     summary: Get school profile
  *     tags: [Schools]
  *     security:
- *       - bearerAuth: []
+ *       
  *     parameters:
  *       - name: schoolId
  *         in: path
@@ -350,7 +350,7 @@ router.patch(
  *             schema:
  *               $ref: '#/components/schemas/UpdateSchoolProfileSchema'
  */
-router.get('/schools/:schoolId/profile', authMiddleware, SchoolEntitiesController.getProfile);
+router.get('/schools/:schoolId/profile', SchoolEntitiesController.getProfile);
 
 /**
  * @swagger
@@ -510,7 +510,7 @@ router.put(
  *     summary: List all spots of a school
  *     tags: [School Spots]
  *     security:
- *       - bearerAuth: []
+ *       
  *     parameters:
  *       - name: schoolId
  *         in: path
@@ -521,7 +521,7 @@ router.put(
  *       200:
  *         description: List of school spots
  */
-router.get('/schools/:schoolId/spots', authMiddleware, SchoolEntitiesController.listSpots);
+router.get('/schools/:schoolId/spots',  SchoolEntitiesController.listSpots);
 /**
  * @swagger
  * /api/schools/{schoolId}/spots/{id}:
@@ -610,7 +610,7 @@ router.post(
  *     summary: List all gallery items of a school
  *     tags: [School Gallery]
  *     security:
- *       - bearerAuth: []
+ *     
  *     parameters:
  *       - name: schoolId
  *         in: path
@@ -645,7 +645,7 @@ router.post(
  */
 router.get(
   '/schools/:schoolId/gallery',
-  authMiddleware,
+
   SchoolEntitiesController.listGallery
 );
 
